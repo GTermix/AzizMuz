@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="uz">
 
@@ -25,90 +26,57 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
 </head>
 <body>
-
-
-    <!-- Track Section Begin -->
-    <section class="track spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <div class="section-title">
-                        <h2>So'nggi musiqalar</h2>
-                        <h1>Music podcast</h1>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="track__all">
-                        <a href="{% url 'musics' %}" class="primary-btn border-btn">Hamma musiqalar</a>
-                    </div>
-                </div>
+<div class="single_player_container">
+    <h4>O'tdi kunlar</h4>
+    <div class="jp-jplayer jplayer" data-ancestor=".jp_container_1"
+         data-url="media/musics/RAVENS_ROCK___AHANG_SiSTEM_-_Sweet_Dreams.mp3" id="jp_jplayer_0"
+         style="width: 0px; height: 0px;"><img id="jp_poster_0" style="width: 0px; height: 0px; display: none;">
+        <audio id="jp_audio_0" preload="metadata"
+               src="http://127.0.0.1:8000/musics/media/musics/RAVENS_ROCK___AHANG_SiSTEM_-_Sweet_Dreams.mp3"></audio>
+    </div>
+    <div class="jp-audio jp_container_1" role="application" aria-label="media player">
+        <div class="jp-gui jp-interface">
+            <!-- Player Controls -->
+            <div class="player_controls_box">
+                <button class="jp-play player_button" tabindex="0"></button>
             </div>
-            <div class="row">
-                <div class="col-lg-7 p-0">
-                    <div class="track__content nice-scroll">
-                        {% for index, i in musics %}
-                        <div class="single_player_container">
-                            <h4>{{i.title}}</h4>
-                            <div class="jp-jplayer jplayer" data-ancestor=".jp_container_{{index}}"
-                                data-url="media/{{i.music}}"></div>
-                            <div class="jp-audio jp_container_{{index}}" role="application" aria-label="media player">
-                                <div class="jp-gui jp-interface">
-                                    <!-- Player Controls -->
-                                    <div class="player_controls_box">
-                                        <button class="jp-play player_button" tabindex="0"></button>
-                                    </div>
-                                    <!-- Progress Bar -->
-                                    <div class="player_bars">
-                                        <div class="jp-progress">
-                                            <div class="jp-seek-bar">
-                                                <div>
-                                                    <div class="jp-play-bar">
-                                                        <div class="jp-current-time" role="timer" aria-label="time">0:00
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
-                                    </div>
-                                    <!-- Volume Controls -->
-                                    <div class="jp-volume-controls">
-                                        <button class="jp-mute" tabindex="0"><i
-                                                class="fa fa-volume-down"></i></button>
-                                        <div class="jp-volume-bar">
-                                            <div class="jp-volume-bar-value" style="width: 0%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- Progress Bar -->
+            <div class="player_bars">
+                <div class="jp-progress">
+                    <div class="jp-seek-bar" style="width: 100%;">
+                        <div>
+                            <div class="jp-play-bar" style="width: 0%;">
+                                <div class="jp-current-time" role="timer" aria-label="time">00:00</div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
-                <div class="col-lg-5 p-0">
-                    <div class="track__pic">
-                        <img src="{% static 'img/track-right.jpg' %}" alt="">
-                    </div>
+                <div class="jp-duration ml-auto" role="timer" aria-label="duration">00:00</div>
+            </div>
+            <!-- Volume Controls -->
+            <div class="jp-volume-controls">
+                <button class="jp-mute" tabindex="0"><i class="fa fa-volume-down"></i></button>
+                <div class="jp-volume-bar">
+                    <div class="jp-volume-bar-value" style="width: 80%;"></div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Track Section End -->
+    </div>
+</div>
 
+<!-- Js Plugins -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+<script src="{% static 'js/jquery.barfiller.js' %}"></script>
+<script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 
-    <!-- Js Plugins -->
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
-    <script src="{% static 'js/jquery.barfiller.js' %}"></script>
-    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
-    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-
-    <!-- Music Plugin -->
-    <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
-    <script src="{% static 'js/jplayerInit.js' %}"></script>
+<!-- Music Plugin -->
+<script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
+<script src="{% static 'js/jplayerInit.js' %}"></script>
 </body>
 </html>
