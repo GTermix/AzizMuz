@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from pytube import YouTube
 from .models import *
+from django.http import FileResponse
 from .forms import *
 
 '''from pytube import YouTube
@@ -58,5 +59,12 @@ class MusicsView(View):
 class VideosView(View):
     def get(self, req):
         latest_video = Videos.objects.order_by('-id')[0]
+        # latest_video.link = latest_video.link.split('=')[1]
         videos_list = Videos.objects.order_by('-id')[1:]
         return render(req, 'main/videos.html', {"latest": latest_video, 'list': videos_list})
+
+
+def music_download(request, music_name):
+    music = get_object_or_404(Musics, music="musics/" + music_name)
+    music_path = music.music.path
+    return FileResponse(open(music_path, 'rb'), as_attachment=True)

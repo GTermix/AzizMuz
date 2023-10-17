@@ -98,17 +98,19 @@
                         <h2>Youtube feed</h2>
                         <h1>Latest videos</h1>
                     </div>
-                    <div class="videos__large__item set-bg" data-setbg="{% static 'img/videos/large-item.jpg' %}">
-                        <a href="https://www.youtube.com/watch?v=yJg-Y5byMMw?autoplay=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                    <div class="videos__large__item set-bg" data-setbg="{{latest.thumb}}">
+                        <a href="{{latest.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
                         <div class="videos__large__item__text">
-                            <h4>Martin Garrix & Pierce Fulton feat. Mike Shinoda - Waiting For Tomorrow (Official Video)
-                            </h4>
+                            <h4>{{latest.title}}</h4>
                             <ul>
-                                <li>02:35:18</li>
-                                <li>Dec 17, 2019</li>
+                                <li>{{latest.dur}}</li>
+                                <li>{{latest.add_time}}</li>
                             </ul>
                         </div>
                     </div>
+                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{latest.link}}" frameborder="1"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                            gyroscope; picture-in-picture" allowfullscreen></iframe>-->
                     <div class="row">
                         <div class="videos__slider owl-carousel">
                             {% for i in list %}

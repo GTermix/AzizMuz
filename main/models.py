@@ -1,14 +1,20 @@
 from django.db import models
 from django.db.models.signals import post_save
+from django.core.validators import FileExtensionValidator
 from django.dispatch import receiver
-from pytube import YouTube
+from django.urls import reverse
+from bs4 import BeautifulSoup
 
 
 class Musics(models.Model):
     title = models.CharField(max_length=128)
-    music = models.FileField(upload_to='musics/')
+    music = models.FileField(upload_to='musics/',
+                             validators=[FileExtensionValidator(['mp3', 'wav', 'ogg', 'm4a', 'wma'])])
     music_photo = models.ImageField(upload_to='images/', null=True, blank=True)
     upload_date = models.DateTimeField(auto_now_add=True)
+
+    def get_music_url(self):
+        return reverse('music_download', args=[self.music])
 
     def __str__(self):
         return self.title
@@ -30,7 +36,7 @@ class Videos(models.Model):
     desc = models.TextField(max_length=128, null=True, blank=True)
     thumb = models.ImageField(upload_to='images/', null=True, blank=True)
     add_time = models.DateField(auto_now_add=True)
-    dur = models.CharField(max_length=255,null=True, blank=True)
+    dur = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -42,17 +48,14 @@ class Videos(models.Model):
 @receiver(post_save, sender=Videos)
 def edit_admin(sender, instance, **kwargs):
     if instance.link:
-        yt = YouTube(instance.link)
-        instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
+        link = instance.link
+        # instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
         if not instance.thumb:
-            instance.thumb = yt.thumbnail_url
+            instance.thumb = 'https://drive.google.com/thumbnail?id='+link.split('/')[-2]
         else:
             instance.thumb.name = 'media/' + instance.thumb.name
-        if not instance.desc:
-            instance.desc = yt.description
         # instance.save()
         Videos.objects.filter(pk=instance.pk).update(
-            dur=instance.dur,
             thumb=instance.thumb,
             desc=instance.desc
         )
