@@ -85,7 +85,7 @@
                         {% if latest_music.desc %}
                         <p style="max-width: 400px;text-align:center;margin:0 auto;word-wrap: break-word;">{{latest_music.desc}}</p>
                         {% endif %}
-                        <a href="{{latest_music.link}}?autoplay=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                        <a href="{{latest_music.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
                         <!-- End Latest music -->
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="youtube__item">
                         <div class="youtube__item__pic set-bg" data-setbg="{{i.thumb}}">
-                            <a href="{{i.link}}?autoplay=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                            <a href="{{i.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
                         </div>
                         <div class="youtube__item__text">
                             <h4>{{i.title}}</h4>
