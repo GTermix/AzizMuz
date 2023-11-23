@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <title>Document</title>
+    <style>
+      .grid {
+        display: grid;
+        grid-gap: 20px;
+      }
+
+      .grid-item {
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      @media (min-width: 768px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      {% for item in album %}
+      <div class="grid-item">
+        <a
+          href="{{item.image}}"
+          class="image-popup"
+          title="{{item.title}} - {{item.date}}"
+        >
+          <img src="{{item.image}}" alt="{{item.title}}" />
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script>
+      // Masonry initialization
+      var grid = document.querySelector(".grid");
+      var masonry = new Masonry(grid, {
+        itemSelector: ".grid-item",
+        columnWidth: ".grid-sizer",
+        percentPosition: true,
+      });
+    </script>
+  </body>
+</html>

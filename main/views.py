@@ -64,7 +64,19 @@ class VideosView(View):
         return render(req, 'main/videos.html', {"latest": latest_video, 'list': videos_list})
 
 
+class AlbumView(View):
+    def get(self, req):
+        album = Images.objects.order_by('-id')
+        return render(req, 'album.html', {"album":album})
+
+
 def music_download(request, music_name):
     music = get_object_or_404(Musics, music="musics/" + music_name)
     music_path = music.music.path
     return FileResponse(open(music_path, 'rb'), as_attachment=True)
+
+
+def image_download(request, image_name):
+    image = get_object_or_404(Images, image="images/" + image_name)
+    image_path = image.image.path
+    return FileResponse(open(image_path, 'rb'), as_attachment=True)
