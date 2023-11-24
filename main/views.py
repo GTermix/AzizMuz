@@ -67,7 +67,7 @@ class VideosView(View):
 class AlbumView(View):
     def get(self, req):
         album = Images.objects.order_by('-id')
-        return render(req, 'album.html', {"album":album})
+        return render(req, 'album.html', {"album": album})
 
 
 def music_download(request, music_name):
