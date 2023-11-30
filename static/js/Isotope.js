@@ -1,8 +1,10 @@
-window.addEventListener("load", function () {
-  renderPictures(1);
-  renderPaginationButtons();
+var shouldLoadMoreImages = true;
+var iso;
+var loadingOverlay = document.querySelector(".loading-overlay");
+
+function initializeIsotope() {
   var grid = document.querySelector(".grid-container");
-  var iso = new Isotope(grid, {
+  iso = new Isotope(grid, {
     itemSelector: ".grid-item",
     percentPosition: true,
     masonry: {
@@ -10,88 +12,123 @@ window.addEventListener("load", function () {
       gutter: 10,
     },
   });
+}
+window.addEventListener("load", () => {
+  initializeIsotope();
 });
 
-function renderPictures(page) {
-  var startIndex = (page - 1) * picturesPerPage;
-  var endIndex = startIndex + picturesPerPage;
-  var pagePictures = pictureLinks.slice(startIndex, endIndex);
+function isElementInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  const windowHeight =
+    window.innerHeight || document.documentElement.clientHeight;
+  const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+  const topVisible = rect.top >= 0 && rect.top <= windowHeight;
+  const bottomVisible = rect.bottom >= 0 && rect.bottom <= windowHeight;
+  const leftVisible = rect.left >= 0 && rect.left <= windowWidth;
+  const rightVisible = rect.right >= 0 && rect.right <= windowWidth;
+  return (topVisible || bottomVisible) && (leftVisible || rightVisible);
+}
 
-  var gridContainer = document.getElementById("gridContainer");
-  gridContainer.innerHTML = "";
+function lazyLoadImages() {
+  var shimmerElements = document.querySelectorAll(".blurred-shimmer-effect");
+  shimmerElements.forEach((element) => {
+    const image = element.querySelector("img.images");
 
-  pagePictures.forEach(function (pictureLink) {
-    var gridItem = document.createElement("div");
-    gridItem.classList.add("grid-item");
+    if (isElementInViewport(element) && image.getAttribute("data-src")) {
+      // Image is in the viewport and not yet loaded, start loading it
+      image.src = image.getAttribute("data-src");
+      image.removeAttribute("data-src");
 
-    var img = document.createElement("img");
-    img.src = pictureLink;
-    img.classList.add("images");
-
-    var itemDetails = document.createElement("div");
-    itemDetails.classList.add("item-details");
-
-    var h3 = document.createElement("h3");
-    h3.innerText = "Title";
-
-    var p = document.createElement("p");
-    p.innerText = "Date";
-
-    itemDetails.appendChild(h3);
-    itemDetails.appendChild(p);
-
-    gridItem.appendChild(img);
-    gridItem.appendChild(itemDetails);
-
-    gridContainer.appendChild(gridItem);
+      // Optional: Add a load event listener to hide the shimmer effect once the image is loaded
+      image.addEventListener("load", () => {
+        element.classList.remove("blurred-shimmer-effect");
+        iso.layout();
+      });
+    }
   });
 }
-function renderPictures(page) {
-  var startIndex = (page - 1) * picturesPerPage;
-  var endIndex = startIndex + picturesPerPage;
-  var pageItems = album.slice(startIndex, endIndex);
 
-  var gridContainer = document.getElementById("gridContainer");
-  gridContainer.innerHTML = "";
+window.addEventListener("load", lazyLoadImages);
+window.addEventListener("scroll", lazyLoadImages);
 
-  pageItems.forEach(function (item) {
-    var gridItem = document.createElement("div");
-    gridItem.classList.add("grid-item");
+function loadPictures() {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        newImages = [];
+        const jsonResponse = JSON.parse(xhr.responseText);
+        jsonResponse.forEach((item) => {
+          const imageUrl = item.image;
+          const title = item.title;
+          const date = item.date;
+          const newPicture = document.createElement("div");
+          //https://i.ibb.co/YRMS6Sx/1024px-Blank1x1-svg.png
+          newPicture.classList.add("grid-item", "blurred-shimmer-effect");
+          newPicture.innerHTML = `
+            <img src="${imageUrl}" data-src="${imageUrl}" alt="${title}" class="lazy-load images">
+            <div class="item-details">
+              <h3>${title}</h3>
+              <p>${date}</p>
+            </div>
+          `;
+          newImages.push(newPicture);
+          const gridContainer = document.querySelector(".grid-container");
+          gridContainer.appendChild(newPicture);
+        });
+        iso.appended(newImages);
+        iso.resetItems();
+        // shouldLoadMoreImages = true;
+      } else {
+        console.error("Error: " + xhr.status);
+      }
+    }
+  };
 
-    var img = document.createElement("img");
-    img.src = item.image;
-    img.classList.add("images");
-
-    var itemDetails = document.createElement("div");
-    itemDetails.classList.add("item-details");
-
-    var h3 = document.createElement("h3");
-    h3.innerText = item.title;
-
-    var p = document.createElement("p");
-    p.innerText = item.date;
-
-    itemDetails.appendChild(h3);
-    itemDetails.appendChild(p);
-
-    gridItem.appendChild(img);
-    gridItem.appendChild(itemDetails);
-
-    gridContainer.appendChild(gridItem);
-  });
+  xhr.open("GET", "/img-api/data/all/", true);
+  xhr.send();
 }
-function renderPaginationButtons() {
-  var paginationContainer = document.querySelector(".pagination");
-  paginationContainer.innerHTML = "";
 
-  for (var i = 1; i <= totalPages; i++) {
-    var button = document.createElement("button");
-    button.innerText = i;
-    button.addEventListener("click", function () {
-      var page = parseInt(this.innerText);
-      renderPictures(page);
-    });
 
-    paginationContainer.appendChild(button);
+function showLoadingOverlay() {
+  loadingOverlay.style.display = "block";
+}
+
+function hideLoadingOverlay() {
+  loadingOverlay.style.display = "none";
+}
+
+shouldLoadMoreImages = true;
+window.addEventListener("scroll", () => {
+  var div = document.querySelector(".grid-container");
+  var lastElement = div.lastElementChild;
+  if (shouldLoadMoreImages && isElementInViewport(lastElement)) {
+    shouldLoadMoreImages = false; // Prevent further loading until current images are loaded
+    loadPictures();
+    lazyLoadImages();
   }
-}
+});
+
+// window.addEventListener("scroll", () => {
+//   var div = document.querySelector(".gr");
+//   var lastElement = div.lastElementChild;
+//   if (shouldLoadMoreImages && isElementInViewport(lastElement)) {
+//     shouldLoadMoreImages = false; // Prevent further loading until current images are loaded
+//     loadPictures();
+//     appendImagesToIsotope();
+//   }
+
+//   // Check if the user has scrolled back to the top of the page
+//   // if (window.scrollY === 0) {
+//   //   shouldLoadMoreImages = true; // Allow loading more images again
+//   // }
+// });
+// function isAtBottom() {
+//   var div = document.querySelector(".gr");
+//   var lastElement = div.lastElementChild;
+//   var lastElementOffset = lastElement.getBoundingClientRect();
+
+//   return (
+//     lastElementOffset.top >= 0 && lastElementOffset.bottom <= window.innerHeight
+//   );
+// }

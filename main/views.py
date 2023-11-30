@@ -1,5 +1,9 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.http import JsonResponse
+from django.core import serializers
 from pytube import YouTube
 from .models import *
 from django.http import FileResponse
@@ -66,8 +70,23 @@ class VideosView(View):
 
 class AlbumView(View):
     def get(self, req):
-        album = Images.objects.order_by('-id')
+        album = Images.objects.order_by('-id')[:20]
         return render(req, 'album.html', {"album": album})
+
+
+def get_picture_links(request):
+    data = Images.objects.order_by('-id').values('image', 'title', 'date')[20:]
+    formatted_data = []
+    for item in data:
+        date_object = item['date']
+        formatted_date = date_object.strftime('%b. %d, %Y')
+        formatted_item = {
+            'image': item['image'],
+            'title': item['title'],
+            'date': formatted_date
+        }
+        formatted_data.append(formatted_item)
+    return JsonResponse(formatted_data, safe=False)
 
 
 def music_download(request, music_name):

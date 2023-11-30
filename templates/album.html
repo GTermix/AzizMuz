@@ -14,7 +14,11 @@
       href="{% static 'css/bootstrap.min.css' %}"
       type="text/css"
     />
-    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link
+      rel="stylesheet"
+      href="{% static 'css/slicknav.min.css' %}"
+      type="text/css"
+    />
     <link
       rel="stylesheet"
       href="{% static 'css/font-awesome.min.css' %}"
@@ -30,18 +34,16 @@
       href="{% static 'css/style.css' %}"
       type="text/css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.min.css"
-    />
+    /> -->
     <link rel="stylesheet" href="{% static 'css/album.css' %}" />
     <title>Document</title>
   </head>
   <body>
     <!-- Page Preloder -->
-    <div id="preloder">
-      <div class="loader"></div>
-    </div>
+  
 
     <!-- Header Section Begin -->
     <header class="header header--normal">
@@ -89,18 +91,25 @@
     </header>
     <!-- Header Section End -->
 
-    <div class="grid-container" id="gridContainer">
-      <div class="gr">
+    <div class="grid-container">
+      
         {% for item in album %}
-        <div class="grid-item">
-          <img src="{{item.image}}" class="images" alt="Image 1" />
+        <div class="grid-item blurred-shimmer-effect">
+      <div class="grid-i">
+          <img
+            src="{{item.image}}"
+            data-src="{{item.image}}"
+            alt="Image"
+            class="images"
+          />
           <div class="item-details">
             <h3>{{item.title}}</h3>
             <p>{{item.date}}</p>
           </div>
+          </div>
         </div>
         {% endfor %}
-      </div>
+      
     </div>
     <!-- Footer Section Begin -->
     <footer
@@ -149,8 +158,9 @@
       </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>  
+    <script src="{% static 'js/isotope.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
