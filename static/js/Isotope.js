@@ -1,6 +1,5 @@
 var shouldLoadMoreImages = true;
 var iso;
-var loadingOverlay = document.querySelector(".loading-overlay");
 
 function initializeIsotope() {
   var grid = document.querySelector(".grid-container");
@@ -50,6 +49,7 @@ function lazyLoadImages() {
 
 window.addEventListener("load", lazyLoadImages);
 window.addEventListener("scroll", lazyLoadImages);
+var currentPage = 1;
 
 function loadPictures() {
   const xhr = new XMLHttpRequest();
@@ -58,13 +58,22 @@ function loadPictures() {
       if (xhr.status === 200) {
         newImages = [];
         const jsonResponse = JSON.parse(xhr.responseText);
-        jsonResponse.forEach((item) => {
+        const picturesPerPage = 20;
+        const startIndex = (currentPage - 1) * picturesPerPage;
+        const endIndex = currentPage * picturesPerPage;
+        const picturesData = jsonResponse.slice(startIndex, endIndex);
+        picturesData.forEach((item) => {
+          console.log(1)
           const imageUrl = item.image;
           const title = item.title;
           const date = item.date;
           const newPicture = document.createElement("div");
           //https://i.ibb.co/YRMS6Sx/1024px-Blank1x1-svg.png
-          newPicture.classList.add("grid-item", "blurred-shimmer-effect");
+          newPicture.classList.add(
+            "grid-item",
+            "blurred-shimmer-effect",
+            "new"
+          );
           newPicture.innerHTML = `
             <img src="${imageUrl}" data-src="${imageUrl}" alt="${title}" class="lazy-load images">
             <div class="item-details">
@@ -76,9 +85,18 @@ function loadPictures() {
           const gridContainer = document.querySelector(".grid-container");
           gridContainer.appendChild(newPicture);
         });
+        currentPage++;
+        if (endIndex >= jsonResponse.length) {
+          const endMessage = document.createElement("h2");
+          endMessage.textContent = "The end of the page";
+          const container = document.querySelector(".grid-container");
+          const parentElement = container.parentNode;
+          parentElement.appendChild(endMessage);
+        }
         iso.appended(newImages);
         iso.resetItems();
-        // shouldLoadMoreImages = true;
+        shouldLoadMoreImages = true;
+        newImages = [];
       } else {
         console.error("Error: " + xhr.status);
       }
@@ -89,13 +107,17 @@ function loadPictures() {
   xhr.send();
 }
 
-
-function showLoadingOverlay() {
-  loadingOverlay.style.display = "block";
+function startLoadingAnimation() {
+  var dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, index) => {
+    dot.style.animationDelay = index * 0.2 + "s";
+  });
+  document.querySelector(".loading-animation").style.display = "flex";
 }
 
-function hideLoadingOverlay() {
-  loadingOverlay.style.display = "none";
+// Function to stop the loading animation
+function stopLoadingAnimation() {
+  document.querySelector(".loading-animation").style.display = "none";
 }
 
 shouldLoadMoreImages = true;
@@ -103,11 +125,22 @@ window.addEventListener("scroll", () => {
   var div = document.querySelector(".grid-container");
   var lastElement = div.lastElementChild;
   if (shouldLoadMoreImages && isElementInViewport(lastElement)) {
-    shouldLoadMoreImages = false; // Prevent further loading until current images are loaded
+    shouldLoadMoreImages = false;
+    startLoadingAnimation();
     loadPictures();
+    stopLoadingAnimation();
     lazyLoadImages();
+    setTimeout(() => {
+      var newDivs = document.querySelectorAll(".new");
+      newDivs.forEach((element) => {
+        element.classList.remove("new");
+      });
+      iso.layout();
+    }, 500);
   }
 });
+
+
 
 // window.addEventListener("scroll", () => {
 //   var div = document.querySelector(".gr");

@@ -43,7 +43,6 @@
   </head>
   <body>
     <!-- Page Preloder -->
-  
 
     <!-- Header Section Begin -->
     <header class="header header--normal">
@@ -92,10 +91,9 @@
     <!-- Header Section End -->
 
     <div class="grid-container">
-      
-        {% for item in album %}
-        <div class="grid-item blurred-shimmer-effect">
-      <div class="grid-i">
+      {% for item in album %}
+      <div class="grid-item blurred-shimmer-effect">
+        <div class="grid-i">
           <img
             src="{{item.image}}"
             data-src="{{item.image}}"
@@ -106,10 +104,14 @@
             <h3>{{item.title}}</h3>
             <p>{{item.date}}</p>
           </div>
-          </div>
         </div>
-        {% endfor %}
-      
+      </div>
+      {% endfor %}
+      <div class="loading-animation">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
     </div>
     <!-- Footer Section Begin -->
     <footer
@@ -159,7 +161,7 @@
     </footer>
 
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
     <script src="{% static 'js/isotope.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
