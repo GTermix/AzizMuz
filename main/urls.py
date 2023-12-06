@@ -10,5 +10,6 @@ urlpatterns = [
     path('musics/musics/<str:music_name>/', music_download, name='music_download'),
     path('musics/', MusicsView.as_view(), name='musics'),
     path('videos/', VideosView.as_view(), name='videos'),
-    path('img-api/data/all/', get_picture_links, name='get_picture_links'),
+    path('imgs-api/data/<int:number>', get_picture_links, name='get_picture_links'),
+    path('imgs-api/cnt/', get_picture_links_count, name='get_picture_links_count'),
 ]

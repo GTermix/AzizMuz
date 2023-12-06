@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import JsonResponse
@@ -70,22 +70,36 @@ class VideosView(View):
 
 class AlbumView(View):
     def get(self, req):
-        album = Images.objects.order_by('-id')[:20]
+        album = Images.objects.order_by('-id')[:10]
         return render(req, 'album.html', {"album": album})
 
 
-def get_picture_links(request):
-    data = Images.objects.order_by('-id').values('image', 'title', 'date')[20:]
+def get_picture_links(request,number):
+    number=int(number)
+    all_data = Images.objects.order_by('-id').values('image', 'title', 'date')[10:]
+    paginator = Paginator(all_data, 5)  # Split the data into pages with 20 objects per page
+
+    page_number = number
+    page = paginator.get_page(page_number)
+    print(paginator.num_pages)
     formatted_data = []
-    for item in data:
-        date_object = item['date']
-        formatted_date = date_object.strftime('%b. %d, %Y')
-        formatted_item = {
-            'image': item['image'],
-            'title': item['title'],
-            'date': formatted_date
-        }
-        formatted_data.append(formatted_item)
+    if paginator.num_pages >= number:
+        for item in page:
+            date_object = item['date']
+            formatted_date = date_object.strftime('%b. %d, %Y')
+            formatted_item = {
+                'image': item['image'],
+                'title': item['title'],
+                'date': formatted_date
+            }
+            formatted_data.append(formatted_item)
+    
+
+    return JsonResponse(formatted_data, safe=False)
+def get_picture_links_count(request):
+    all_data = Images.objects.order_by('-id').values('image', 'title', 'date')[10:]
+    paginator = Paginator(all_data, 5)
+    formatted_data = {"p":paginator.num_pages}
     return JsonResponse(formatted_data, safe=False)
 
 
