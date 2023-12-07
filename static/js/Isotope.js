@@ -83,7 +83,7 @@ function loadPictures(number, callback) {
         const date = item.date;
         const newPicture = document.createElement("div");
         //https://i.ibb.co/YRMS6Sx/1024px-Blank1x1-svg.png
-        newPicture.classList.add("grid-item", "blurred-shimmer-effect", "new");
+        newPicture.classList.add("grid-item", "blurred-shimmer-effect");
         newPicture.innerHTML = `
             <img src="${imageUrl}" data-src="${imageUrl}" alt="${title}" class="lazy-load images">
             <div class="item-details">
@@ -127,8 +127,14 @@ function stopLoadingAnimation() {
 const scrollEventListener = () => {
   var div = document.querySelector(".grid-container");
   var lastElement = div.lastElementChild;
-  if (isElementInViewport(lastElement) && maxPage >= currentPage) {
+  if (
+    isElementInViewport(lastElement) &&
+    maxPage >= currentPage &&
+    isLastNotAppended
+  ) {
+    isLastNotAppended = false;
     startLoadingAnimation();
+    setTimeout(() => {
     loadPictures(currentPage, (error, result) => {
       if (error) {
         console.error(error);
@@ -138,27 +144,27 @@ const scrollEventListener = () => {
           last &&
           isElementInViewport(lastElement)
         ) {
-          // setTimeout(() => {
           console.log(90);
           const container = document.querySelector(".bottom");
           const endMessage = document.createElement("h2");
           endMessage.textContent = "The end of the page";
           container.appendChild(endMessage);
           currentPage++;
-          // }, 1000);
         }
       }
+      currentPage++;
+      isLastNotAppended = true;
     });
+  }, 10000);
     stopLoadingAnimation();
     lazyLoadImages();
-    setTimeout(() => {
-      var newDivs = document.querySelectorAll(".new");
-      newDivs.forEach((element) => {
-        element.classList.remove("new");
-      });
-      iso.layout();
-    }, 500);
-    currentPage++;
+    // setTimeout(() => {
+    //   var newDivs = document.querySelectorAll(".new");
+    //   newDivs.forEach((element) => {
+    //     element.classList.remove("new");
+    //   });
+    //   iso.layout();
+    // }, 500);
   }
 };
 
