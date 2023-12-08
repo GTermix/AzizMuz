@@ -77,11 +77,11 @@ class AlbumView(View):
 def get_picture_links(request,number):
     number=int(number)
     all_data = Images.objects.order_by('-id').values('image', 'title', 'date')[10:]
-    paginator = Paginator(all_data, 5)  # Split the data into pages with 20 objects per page
+    paginator = Paginator(all_data, 10)  # Split the data into pages with 20 objects per page
 
     page_number = number
     page = paginator.get_page(page_number)
-    print(paginator.num_pages)
+    print("\n\n",page[9],"\n")
     formatted_data = []
     if paginator.num_pages >= number:
         for item in page:
@@ -98,7 +98,7 @@ def get_picture_links(request,number):
     return JsonResponse(formatted_data, safe=False)
 def get_picture_links_count(request):
     all_data = Images.objects.order_by('-id').values('image', 'title', 'date')[10:]
-    paginator = Paginator(all_data, 5)
+    paginator = Paginator(all_data, 10)
     formatted_data = {"p":paginator.num_pages}
     return JsonResponse(formatted_data, safe=False)
 
