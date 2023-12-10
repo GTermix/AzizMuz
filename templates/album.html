@@ -33,6 +33,11 @@
       rel="stylesheet"
       href="{% static 'css/style.css' %}"
       type="text/css"
+    />  
+    <link
+      rel="stylesheet"
+      href="{% static 'css/popup-album.css' %}"
+      type="text/css"
     />
     <!-- <link
       rel="stylesheet"
@@ -94,12 +99,14 @@
       {% for item in album %}
       <div class="grid-item blurred-shimmer-effect">
         <div class="grid-i">
-          <img
-            src="{{item.image}}"
-            data-src="{{item.image}}"
-            alt="Image"
-            class="images"
-          />
+          <a href="{{ item.image }}" class="popup-link">
+            <img
+              src="{{ item.image }}"
+              data-src="{{ item.image }}"
+              alt="Image"
+              class="images"
+            />
+          </a>
           <div class="item-details">
             <h3>{{item.title}}</h3>
             <p>{{item.date}}</p>
@@ -163,7 +170,8 @@
     </footer>
 
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src="{% static 'js/popup-album.js' %}"></script>
+    <script src="{% static 'js/masonry.js' %}"></script>
     <script src="{% static 'js/isotope.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>

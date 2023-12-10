@@ -49,8 +49,13 @@ h3 {
 }
 
 .new {
-  display:none;
-  
+  display: none;
+}
+.end-message {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .item-details {

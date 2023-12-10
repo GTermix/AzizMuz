@@ -1,9 +1,11 @@
 from datetime import datetime
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
+from django.views.generic.base import View
 from django.http import JsonResponse
 from django.core import serializers
+from django.views.decorators.cache import cache_page
 from pytube import YouTube
 from .models import *
 from django.http import FileResponse
@@ -67,11 +69,13 @@ class VideosView(View):
         videos_list = Videos.objects.order_by('-id')[1:]
         return render(req, 'main/videos.html', {"latest": latest_video, 'list': videos_list})
 
-
+# @cache(timeout=60)
 class AlbumView(View):
     def get(self, req):
         album = Images.objects.order_by('-id')[:10]
-        return render(req, 'album.html', {"album": album})
+        resp = render(req, 'album.html', {"album": album})
+        resp['Cache-Control'] = 'max-age=300'
+        return resp
 
 
 def get_picture_links(request,number):

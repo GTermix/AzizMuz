@@ -76,7 +76,7 @@ function loadPictures(number) {
     if (xhr.status === 200) {
       newImages = [];
       const jsonResponse = JSON.parse(xhr.responseText);
-      console.log(jsonResponse.length+"  "+ logCurrentTime())
+      console.log(jsonResponse.length + "  " + logCurrentTime());
       jsonResponse.forEach((item) => {
         const imageUrl = item.image;
         const title = item.title;
@@ -139,35 +139,36 @@ var scrollEventListener = () => {
     newDivs.forEach((element) => {
       element.classList.remove("new");
     });
-    if (!dn) {
-      nextToLastElement = document.querySelector(
-        ".grid-item:nth-last-child(2)"
-      );
-      observer.observe(nextToLastElement, { childList: true });
-    }
     iso.layout();
     currentPage++;
-
+    if (!dn) {
+      observer.disconnect()
+      setTimeout(() => {
+        nextToLastElement = document.querySelector(
+          ".grid-item:nth-last-child(2)"
+        );
+        observer.observe(nextToLastElement, { childList: true });
     return;
-  }, 5000);
+      }, 2000);
+    }
+  }, 4000);
 };
 var isDisconnected = false;
 var nextToLastElement = document.querySelector(".grid-item:nth-last-child(2)");
 var dn = false;
-
+var last = false;
 var observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       console.log(maxPage + " & " + currentPage + "  " + logCurrentTime());
-      if (wasLast) {
-        console.log(maxPage + " ^ " + currentPage + "  " + logCurrentTime());
-        nextToLastElement = document.querySelector(".grid-item:last-child");
-        observer.observe(nextToLastElement, { childList: true });
-      } else {
-        console.log("C" + "  " + logCurrentTime());
-        scrollEventListener();
-        
-      }
+
+      // if (wasLast && dn) {
+      //   console.log(maxPage + " ^ " + currentPage + "  " + logCurrentTime());
+      //   nextToLastElement = document.querySelector(".grid-item:last-child");
+      //   observer.observe(nextToLastElement, { childList: true });
+      //   last = true;
+      //   return
+      // }
 
       if (maxPage == currentPage - 1 && wasLast && !dn) {
         console.log(maxPage + " * " + currentPage + "  " + logCurrentTime());
@@ -178,8 +179,13 @@ var observer = new IntersectionObserver((entries) => {
           endMessage.textContent = "The end of the page";
           endMessage.classList.add("end-message");
           container.appendChild(endMessage);
-        }, 2000);
-        // currentPage++;
+          observer.disconnect();
+          return;
+        }, 3500);
+      }
+      if (!wasLast) {
+        console.log("C" + "  " + logCurrentTime());
+        scrollEventListener();
       }
     }
   });
@@ -188,11 +194,11 @@ var observer = new IntersectionObserver((entries) => {
 observer.observe(nextToLastElement, { childList: true });
 
 function uo() {
-  if (dn) {
+  if (dn && last) {
     observer.disconnect();
     console.log("ds" + "  " + logCurrentTime());
     window.removeEventListener("scroll", uo);
   }
 }
 
-window.addEventListener("scroll", uo);
+// window.addEventListener("scroll", uo);
