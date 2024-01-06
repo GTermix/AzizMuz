@@ -75,13 +75,18 @@
 		});
 
 
+		// function GetPlayerProgress() {
+		// 	return (thisItem.find('.jp-play-bar').width() / $('.jp-seek-bar').width() * 100);
+		// }
 		function GetPlayerProgress() {
-			return (thisItem.find('.jp-play-bar').width() / $('.jp-seek-bar').width() * 100);
-		}
+  return player.jPlayer("option", "currentTime") / player.jPlayer("option", "duration") * 100;
+}
+
 
 		function RewindTrack() {
 			//Get current progress and decrement
 			var currentProgress = GetPlayerProgress();
+			console.log(currentProgress);
 			var futureProgress = currentProgress - 5;
 			//If it goes past the starting point - stop rewinding and pause
 			if (futureProgress <= 0) {

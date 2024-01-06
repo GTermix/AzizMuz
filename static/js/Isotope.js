@@ -1,5 +1,24 @@
 var shouldLoadMoreImages = true;
 var iso;
+var isDisconnected = false;
+var dn = false;
+var last = false;
+var currentPage = 1;
+var maxPage = 0;
+var wasLast = false;
+var nl = true; //not loaded
+var ld = false;
+
+// var nextToLastElement = document.querySelector(".grid-item:nth-last-child(2)");
+
+function logCurrentTime() {
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const seconds = now.getSeconds().toString().padStart(2, "0");
+  const currentTime = `${hours}:${minutes}:${seconds}`;
+  return currentTime;
+}
 
 function initializeIsotope() {
   var grid = document.querySelector(".grid-container");
@@ -12,10 +31,19 @@ function initializeIsotope() {
     },
   });
 }
-window.addEventListener("load", () => {
+
+function observeNextToLastElement() {
+  const nextToLastElement = document.querySelector(
+    ".grid-item:nth-last-child(2)"
+  );
+  observer.observe(nextToLastElement);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadCnt();
+  magPopup();
   initializeIsotope();
 });
-
 function isElementInViewport(element) {
   const rect = element.getBoundingClientRect();
   const windowHeight =
@@ -41,17 +69,34 @@ function lazyLoadImages() {
       // Optional: Add a load event listener to hide the shimmer effect once the image is loaded
       image.addEventListener("load", () => {
         element.classList.remove("blurred-shimmer-effect");
-        iso.layout();
       });
     }
+    iso.layout();
   });
 }
 
-window.addEventListener("load", lazyLoadImages);
-window.addEventListener("scroll", lazyLoadImages);
-var currentPage = 1;
-var maxPage = 0;
-var wasLast = false;
+window.addEventListener("load", () => {
+  lazyLoadImages();
+  ld = true;
+  iso.layout();
+});
+window.addEventListener("scroll", () => {
+  lazyLoadImages();
+  if (nl && ld) {
+    iso.layout();
+    const nextToLastElement = document.querySelector(
+      ".grid-item:nth-last-child(2)"
+    );
+    const nextToLastElementa = document.querySelector(".grid-item:last-child");
+    if (
+      isElementInViewport(nextToLastElement) &&
+      isElementInViewport(nextToLastElementa)
+    ) {
+      observeNextToLastElement();
+      nl = false;
+    }
+  }
+});
 function loadCnt() {
   const xhr = new XMLHttpRequest();
   xhr.onload = () => {
@@ -69,33 +114,53 @@ function loadCnt() {
   xhr.send();
 }
 
-document.addEventListener("DOMContentLoaded", loadCnt);
+function magPopup() {
+  $(".grid-item").magnificPopup({
+    type: "image",
+    delegate: "a",
+    gallery: {
+      enabled: true,
+    },
+    image: {
+      srcImg: (item) => {
+        return item.el.find("img").attr("src");
+      },
+    },
+  });
+  $(".grid-item a").click((event) => {
+    event.preventDefault();
+  });
+}
+
 function loadPictures(number) {
   const xhr = new XMLHttpRequest();
   xhr.onload = () => {
     if (xhr.status === 200) {
       newImages = [];
       const jsonResponse = JSON.parse(xhr.responseText);
-      console.log(jsonResponse.length + "  " + logCurrentTime());
       jsonResponse.forEach((item) => {
         const imageUrl = item.image;
+        const cImageUrl = item.compressed_image;
         const title = item.title;
         const date = item.date;
         const newPicture = document.createElement("div");
         //https://i.ibb.co/YRMS6Sx/1024px-Blank1x1-svg.png
         newPicture.classList.add("grid-item", "blurred-shimmer-effect", "new");
         newPicture.innerHTML = `
-            <img src="${imageUrl}" data-src="${imageUrl}" alt="${title}" class="lazy-load images">
+          <a href="${imageUrl}" class="ln">
+            <img src="${cImageUrl}" data-src="${imageUrl}" alt="${title}" class="lazy-load images">
             <div class="item-details">
               <h3>${title}</h3>
               <p>${date}</p>
             </div>
+          </a>
           `;
         newImages.push(newPicture);
         const gridContainer = document.querySelector(".grid-container");
         gridContainer.appendChild(newPicture);
       });
       iso.appended(newImages);
+      iso.layout();
       if (number == maxPage) {
         wasLast = true;
       }
@@ -108,59 +173,39 @@ function loadPictures(number) {
   xhr.send();
 }
 
-function startLoadingAnimation() {
-  var dots = document.querySelectorAll(".dot");
-  dots.forEach((dot, index) => {
-    dot.style.animationDelay = index * 0.2 + "s";
-  });
-  document.querySelector(".loading-animation").style.display = "flex";
-}
-function stopLoadingAnimation() {
-  document.querySelector(".loading-animation").style.display = "none";
-}
-
-function logCurrentTime() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const seconds = now.getSeconds().toString().padStart(2, "0");
-  const currentTime = `${hours}:${minutes}:${seconds}`;
-  return currentTime;
-}
 
 var scrollEventListener = () => {
-  startLoadingAnimation();
   loadPictures(currentPage);
-  stopLoadingAnimation();
+  iso.layout();
   lazyLoadImages();
+  observer.disconnect();
   setTimeout(() => {
-    console.log(maxPage + " | " + currentPage + "  " + logCurrentTime());
-    var newDivs = document.querySelectorAll(".new");
+    const newDivs = document.querySelectorAll(".new");
     newDivs.forEach((element) => {
       element.classList.remove("new");
     });
     iso.layout();
     currentPage++;
     if (!dn) {
-      observer.disconnect()
+      iso.layout();
       setTimeout(() => {
+        iso.once("arrangeComplete", function () {
+          console.log("arrange done, just this one time");
+        });
+        iso.layout();
         nextToLastElement = document.querySelector(
           ".grid-item:nth-last-child(2)"
         );
-        observer.observe(nextToLastElement, { childList: true });
-    return;
-      }, 2000);
+        observer.observe(nextToLastElement);
+        return;
+      }, 4500);
     }
-  }, 4000);
+  }, 1500);
 };
-var isDisconnected = false;
-var nextToLastElement = document.querySelector(".grid-item:nth-last-child(2)");
-var dn = false;
-var last = false;
+
 var observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      console.log(maxPage + " & " + currentPage + "  " + logCurrentTime());
 
       // if (wasLast && dn) {
       //   console.log(maxPage + " ^ " + currentPage + "  " + logCurrentTime());
@@ -169,9 +214,11 @@ var observer = new IntersectionObserver((entries) => {
       //   last = true;
       //   return
       // }
+      if (maxPage < currentPage) {
+        observer.disconnect();
+      }
 
       if (maxPage == currentPage - 1 && wasLast && !dn) {
-        console.log(maxPage + " * " + currentPage + "  " + logCurrentTime());
         setTimeout(() => {
           dn = true;
           const container = document.querySelector(".bottom");
@@ -179,19 +226,35 @@ var observer = new IntersectionObserver((entries) => {
           endMessage.textContent = "The end of the page";
           endMessage.classList.add("end-message");
           container.appendChild(endMessage);
+          magPopup();
           observer.disconnect();
           return;
-        }, 3500);
+        }, 2000); 
       }
       if (!wasLast) {
-        console.log("C" + "  " + logCurrentTime());
         scrollEventListener();
+        magPopup();
       }
     }
   });
 });
 
-observer.observe(nextToLastElement, { childList: true });
+
+
+function freezeScroll() {
+  var top = window.scrollY || document.documentElement.scrollTop;
+  window.onscroll = function () {
+    window.scrollTo(0, top);
+  };
+}
+
+var gridItems = document.querySelectorAll(".grid-item");
+
+gridItems.forEach(function (item) {
+  item.addEventListener("click", function () {
+    freeze();
+  });
+});
 
 function uo() {
   if (dn && last) {

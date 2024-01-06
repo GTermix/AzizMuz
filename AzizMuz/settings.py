@@ -13,7 +13,8 @@ SECRET_KEY = 'django-insecure-oty2kh^s6x@^v$m!gjhcs+i8h9#+rwx53$)2u4y@453rlm81tj
 DEBUG = True
 
 ALLOWED_HOSTS = ["azizmusics.onrender.com",
-                 "127.0.0.1"]
+                 "127.0.0.1",
+                 "192.168.0.104"]
 
 # Application definition
 

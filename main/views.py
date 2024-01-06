@@ -19,6 +19,8 @@ duration = yt.length
 
 
 class Index(View):
+    # o = VisitorCounter.objects.create()
+    # print(o.id,o.date,o.time)
     email_field = SubscribeNews
 
     def get(self, req):
@@ -69,11 +71,11 @@ class VideosView(View):
         videos_list = Videos.objects.order_by('-id')[1:]
         return render(req, 'main/videos.html', {"latest": latest_video, 'list': videos_list})
 
-# @cache(timeout=60)
+
 class AlbumView(View):
     def get(self, req):
         album = Images.objects.order_by('-id')[:10]
-        resp = render(req, 'album.html', {"album": album})
+        resp = render(req, 'main/album.html', {"album": album})
         resp['Cache-Control'] = 'max-age=300'
         return resp
 
@@ -85,7 +87,6 @@ def get_picture_links(request,number):
 
     page_number = number
     page = paginator.get_page(page_number)
-    print("\n\n",page[9],"\n")
     formatted_data = []
     if paginator.num_pages >= number:
         for item in page:
@@ -110,10 +111,15 @@ def get_picture_links_count(request):
 def music_download(request, music_name):
     music = get_object_or_404(Musics, music="musics/" + music_name)
     music_path = music.music.path
-    return FileResponse(open(music_path, 'rb'), as_attachment=True)
+    return FileResponse(open(music_path, 'rb'), as_attachment=False)
 
 
 def image_download(request, image_name):
-    image = get_object_or_404(Images, image="images/" + image_name)
-    image_path = image.image.path
-    return FileResponse(open(image_path, 'rb'), as_attachment=True)
+    s=image_name.split("_")[0][-1]=="c"
+    if not s:
+        image = get_object_or_404(Images, image="images/" + image_name)
+        image_path = image.image.path
+    else:
+        image = get_object_or_404(Images, compressed_image="images/" + image_name)
+        image_path = image.compressed_image.path
+    return FileResponse(open(image_path, 'rb'),as_attachment=False)

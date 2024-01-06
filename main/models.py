@@ -1,10 +1,12 @@
 import os
+import requests
 from AzizMuz.settings import MEDIA_ROOT
 from django.db import models
 from django.db.models.signals import post_save
 from django.core.validators import FileExtensionValidator
 from django.dispatch import receiver
 from django.urls import reverse
+from PIL import Image
 
 
 class Musics(models.Model):
@@ -31,13 +33,13 @@ class Videos(models.Model):
         ('trio', 'Trio'),
         ('quartet', 'Quartet')
     )
-    link = models.CharField(max_length=1000)
-    song_type = models.CharField(max_length=16, choices=CHOICES, default='single')
-    title = models.CharField(max_length=128)
-    desc = models.TextField(max_length=128, null=True, blank=True)
-    thumb = models.ImageField(upload_to='images/', blank=True)
+    link = models.CharField(max_length=1000, verbose_name="Mega linkni kiriting")
+    song_type = models.CharField(max_length=16, choices=CHOICES, default='single', verbose_name="Qo'shiq turi")
+    title = models.CharField(max_length=128, verbose_name="Video sarlavhasi")
+    desc = models.TextField(max_length=128, null=True, blank=True, verbose_name="Qo'shimcha tavsif")
+    thumb = models.ImageField(upload_to='images/', verbose_name="Video muqova rasmi")
     add_time = models.DateField(auto_now_add=True)
-    dur = models.CharField(max_length=255, null=True, blank=True)
+    dur = models.CharField(max_length=255, verbose_name="Video davomiyligi (misol:'23:14')")
 
     def __str__(self):
         return self.title
@@ -49,23 +51,25 @@ class Videos(models.Model):
 @receiver(post_save, sender=Videos)
 def edit_admin(sender, instance, **kwargs):
     if instance.link:
-        link = instance.link
+        instance.link = "https://mega.nz/embed/" + instance.link.split("/")[-1]
         # instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
-        if not instance.thumb:
-            instance.thumb = 'https://drive.google.com/thumbnail?id=' + link.split('/')[-2]
-        else:
-            instance.thumb.name = 'media/' + instance.thumb.name
+        # if not instance.thumb:
+        #     instance.thumb = 'https://drive.google.com/thumbnail?id=' + link.split('/')[-2]
+        # else:
+        #     instance.thumb.name = 'media/' + instance.thumb.name
         # instance.save()
+        # thumb=instance.thumb,
+        # desc=instance.desc
         Videos.objects.filter(pk=instance.pk).update(
-            thumb=instance.thumb,
-            desc=instance.desc
+            link=instance.link,
         )
 
 
 class Images(models.Model):
     image = models.ImageField(upload_to='images')
+    compressed_image = models.ImageField(upload_to='images', blank=True)
     title = models.CharField(max_length=512)
-    date = models.DateField(auto_now_add=True, blank=True)
+    date = models.DateField(auto_now_add=True, blank=True)  # upload to pcloud tests.py
 
     def __str__(self):
         return f"{self.title} - {self.date}"
@@ -76,13 +80,21 @@ class Images(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         album = Images.objects.order_by('-id').first()
-        print(album.image)
         old_file_path = os.path.join(MEDIA_ROOT, f'{album.image}')
         new_file_path = os.path.join(MEDIA_ROOT, 'images', f'photo_{album.pk}.{str(album.image)[-3:]}')
         os.rename(old_file_path,
                   new_file_path)
+        image = Image.open(new_file_path)
+        width, height = image.size
+        new_size = (width // 2, height // 2)
+        resized_image = image.resize(new_size)
+        new_file_pathc = os.path.join(MEDIA_ROOT, 'images', f'photoc_{album.pk}.{str(album.image)[-3:]}')
+        resized_image.save(f'{new_file_pathc}', optimize=True, quality=1)
+        original_size = os.path.getsize(new_file_path)
+        compressed_size = os.path.getsize(new_file_pathc)
         Images.objects.filter(pk=album.pk).update(
-            image=f'images/photo_{album.pk}.{str(album.image)[-3:]}'
+            image=f'images/photo_{album.pk}.{str(album.image)[-3:]}',
+            compressed_image=f"images/photoc_{album.pk}.{str(album.image)[-3:]}"
         )
 
 
@@ -100,3 +112,15 @@ class UpcomingEvents(models.Model):
 
 class SubscribeEmail(models.Model):
     email = models.EmailField()
+
+
+class VisitorCounter(models.Model):
+    count = models.IntegerField(default=1)
+    date = models.DateField(auto_now_add=True)
+    time = models.TimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return "Visitors Count"
+
+    class Meta:
+        db_table = "VisitorCounter"
