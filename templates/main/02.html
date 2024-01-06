@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.button-wrapper::before,
+.button-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0; /* Initial opacity */
+  pointer-events: none; /* Prevent interaction with the pseudo-elements */
+}
+
+.button-wrapper::before {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: glowing-dot 2s ease-in-out infinite;
+}
+
+.button-wrapper::after {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  animation: glowing-dot 3s ease-in-out infinite;
+}
+
+@keyframes glowing-dot {
+  0% {
+    opacity: 0; /* Start with no opacity */
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1; /* Increase opacity to create glowing effect */
+  }
+  100% {
+    opacity: 0; /* Fade out, back to no opacity */
+    transform: rotate(360deg);
+  }
+}
+
+
+.wrapper{
+    width:500px;
+    height:300px;
+    margin: 200px auto;
+}
+.glass{
+    background: linear-gradient(135 deg,rgba(255, 0, 0, 0.1),rgba(255, 0, 0, 0));
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body {
+  background: black; 
+   display: flex; 
+   justify-content: center;
+   align-items: center;
+      height: 100vh;
+    overflow: hidden;
+}
+
+.box {
+  position: relative;
+  height:  auto;
+  width: auto;
+  display: block;
+  background: linear-gradient(0deg, black, #444444);
+}
+
+.glowing::before{
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #e8f74d, #ff6600d9, #00ff66, #13ff13, #ad27ad, #bd2681, #6512b9, #ff3300de, #5aabde);
+  background-size: 400%;
+  width: calc(100% + 5px);
+  height: calc(100% + 5px);
+  z-index: -1;
+  animation: glower 20s linear infinite;
+}
+
+@keyframes glower {
+  0% {
+    background-position: 0 0;
+  }
+  
+  50% {
+    background-position: 400% 0;
+  }
+  
+  100% {
+    background-position: 0 0;
+  }
+}
+</style>
+
+</head>
+<body>
+ <div class="box glowing"><button>salom</button></div>   
+ <div class="wrapper glass"></div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="DJoz Template">
+    <meta name="keywords" content="DJoz, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Videos</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/barfiller.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nowfont.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/rockville.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
+    <style>
+    /* Custom CSS for Plyr video player */
+    .plyr {
+      background-color: #000;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    .plyr--video .plyr__controls {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .plyr__control--overlaid {
+      color: #fff;
+    }
+
+
+    </style>
+</head>
+
+
+<body>
+
+<!-- Video Section Begin -->
+<section class="videos spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title center-title">
+                    <h2>Youtube feed</h2>
+                    <h1>Latest videos</h1>
+                </div>
+                <div class="videos__large__item set-bg" data-setbg="{{latest.thumb}}">
+                    <a href="{{latest.link}}"
+                       class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                    <div class="videos__large__item__text">
+                        <h4>{{latest.title}}</h4>
+                        <ul>
+                            <li>{{latest.dur}}</li>
+                            <li>{{latest.add_time}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="videos__slider owl-carousel">
+                        {% for i in list %}
+                        <div class="col-lg-3">
+                            <div class="videos__item">
+                                <div class="videos__item__pic set-bg" data-setbg="{{i.thumb}}">
+                                    <a href="{{i.link}}?autoplay=1" class="play-btn video-popup"><i
+                                            class="fa fa-play"></i></a>
+                                </div>
+                                <div class="videos__item__text">
+                                    <h5>{{i.title}}</h5>
+                                    <ul>
+                                        <li>{{i.dur}}</li>
+                                        <li>{{i.add_time}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Video Section End -->
+
+<!-- Js Plugins -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+<script src="{% static 'js/jquery.barfiller.js' %}"></script>
+<script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- Music Plugin -->
+<script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
+<script src="{% static 'js/jplayerInit.js' %}"></script>
+
+<script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+<script>
+$(document).ready(function() {
+  $('.videos').on('click', '.video-popup', function(e) {
+    e.preventDefault();
+    // Select the iframe element
+var iframeElement = document.querySelector('iframe.mfp-iframe');
+
+// Get the iframe's content window
+var iframeContentWindow = iframeElement.contentWindow;
+
+// Access the iframe's document
+var iframeContentDocument = iframeContentWindow.document;
+
+// Wait for the iframe to finish loading
+iframeElement.onload = function() {
+  // Find the video element within the iframe's document
+  var videoElement = iframeContentDocument.querySelector('video');
+
+  // Create a new Plyr player instance with the video element
+  const player = new Plyr(videoElement);
+};
+  });
+});
+
+
+</script>
+</body>
+
+</html>
