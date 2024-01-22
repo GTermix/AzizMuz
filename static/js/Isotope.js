@@ -9,27 +9,20 @@ var wasLast = false;
 var nl = true; //not loaded
 var ld = false;
 
-// var nextToLastElement = document.querySelector(".grid-item:nth-last-child(2)");
-
-function logCurrentTime() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const seconds = now.getSeconds().toString().padStart(2, "0");
-  const currentTime = `${hours}:${minutes}:${seconds}`;
-  return currentTime;
-}
-
 function initializeIsotope() {
   var grid = document.querySelector(".grid-container");
-  iso = new Isotope(grid, {
-    itemSelector: ".grid-item",
-    percentPosition: true,
-    masonry: {
-      columnWidth: ".grid-item",
-      gutter: 10,
-    },
-  });
+  const firstElement = grid.firstElementChild;
+
+  if (firstElement.tagName === "H3") {
+    iso = new Isotope(grid, {
+      itemSelector: ".grid-item",
+      percentPosition: true,
+      masonry: {
+        columnWidth: ".grid-item",
+        gutter: 10,
+      },
+    });
+  }
 }
 
 function observeNextToLastElement() {
@@ -40,9 +33,14 @@ function observeNextToLastElement() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  loadCnt();
-  magPopup();
-  initializeIsotope();
+  const gridContainer = document.querySelector(".grid-container");
+  const firstElement = gridContainer.firstElementChild;
+
+  if (!(firstElement.tagName === "H3")) {
+    loadCnt();
+    magPopup();
+    initializeIsotope();
+  }
 });
 function isElementInViewport(element) {
   const rect = element.getBoundingClientRect();
@@ -76,24 +74,35 @@ function lazyLoadImages() {
 }
 
 window.addEventListener("load", () => {
-  lazyLoadImages();
-  ld = true;
-  iso.layout();
+  const gridContainer = document.querySelector(".grid-container");
+  const firstElement = gridContainer.firstElementChild;
+
+  if (!(firstElement.tagName === "H3")) {
+    lazyLoadImages();
+    ld = true;
+    iso.layout();
+  } 
 });
 window.addEventListener("scroll", () => {
-  lazyLoadImages();
-  if (nl && ld) {
-    iso.layout();
-    const nextToLastElement = document.querySelector(
-      ".grid-item:nth-last-child(2)"
-    );
-    const nextToLastElementa = document.querySelector(".grid-item:last-child");
-    if (
-      isElementInViewport(nextToLastElement) &&
-      isElementInViewport(nextToLastElementa)
-    ) {
-      observeNextToLastElement();
-      nl = false;
+  const gridContainer = document.querySelector(".grid-container");
+  const firstElement = gridContainer.firstElementChild;
+  if (!(firstElement.tagName === "H3")) {
+    lazyLoadImages();
+    if (nl && ld) {
+      iso.layout();
+      const nextToLastElement = document.querySelector(
+        ".grid-item:nth-last-child(2)"
+      );
+      const nextToLastElementa = document.querySelector(
+        ".grid-item:last-child"
+      );
+      if (
+        isElementInViewport(nextToLastElement) &&
+        isElementInViewport(nextToLastElementa)
+      ) {
+        observeNextToLastElement();
+        nl = false;
+      }
     }
   }
 });
@@ -173,7 +182,6 @@ function loadPictures(number) {
   xhr.send();
 }
 
-
 var scrollEventListener = () => {
   loadPictures(currentPage);
   iso.layout();
@@ -206,7 +214,6 @@ var scrollEventListener = () => {
 var observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-
       // if (wasLast && dn) {
       //   console.log(maxPage + " ^ " + currentPage + "  " + logCurrentTime());
       //   nextToLastElement = document.querySelector(".grid-item:last-child");
@@ -229,7 +236,7 @@ var observer = new IntersectionObserver((entries) => {
           magPopup();
           observer.disconnect();
           return;
-        }, 2000); 
+        }, 2000);
       }
       if (!wasLast) {
         scrollEventListener();
@@ -238,8 +245,6 @@ var observer = new IntersectionObserver((entries) => {
     }
   });
 });
-
-
 
 function freezeScroll() {
   var top = window.scrollY || document.documentElement.scrollTop;
@@ -252,7 +257,7 @@ var gridItems = document.querySelectorAll(".grid-item");
 
 gridItems.forEach(function (item) {
   item.addEventListener("click", function () {
-    freeze();
+    freezeScroll();
   });
 });
 
@@ -265,3 +270,23 @@ function uo() {
 }
 
 // window.addEventListener("scroll", uo);
+
+
+var submitButton = document.getElementById("submitButton");
+submitButton.addEventListener("click", function () {
+  var form = document.getElementById("myForm");
+  var formData = new FormData(form);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "your-server-url");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        console.log("Form data submitted successfully");
+      } else {
+        console.error("Error submitting form data:", xhr.status);
+      }
+    }
+  };
+  xhr.send(formData);
+});

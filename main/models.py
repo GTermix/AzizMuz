@@ -9,7 +9,7 @@ from django.urls import reverse
 from PIL import Image
 
 
-class Musics(models.Model):
+class Music(models.Model):
     title = models.CharField(max_length=256)
     music = models.FileField(upload_to='musics/',
                              validators=[FileExtensionValidator(['mp3', 'wav', 'ogg', 'm4a', 'wma'])])
@@ -26,20 +26,20 @@ class Musics(models.Model):
         db_table = "Music"
 
 
-class Videos(models.Model):
+class Video(models.Model):
     CHOICES = (
         ('single', 'Single'),
         ('duet', 'Duet'),
         ('trio', 'Trio'),
         ('quartet', 'Quartet')
     )
-    link = models.CharField(max_length=1000, verbose_name="Mega linkni kiriting")
+    link = models.CharField(max_length=1000, verbose_name="YouTube linkni kiriting")
     song_type = models.CharField(max_length=16, choices=CHOICES, default='single', verbose_name="Qo'shiq turi")
     title = models.CharField(max_length=128, verbose_name="Video sarlavhasi")
     desc = models.TextField(max_length=128, null=True, blank=True, verbose_name="Qo'shimcha tavsif")
-    thumb = models.ImageField(upload_to='images/', verbose_name="Video muqova rasmi")
+    thumb = models.ImageField(upload_to='images/',blank=True, verbose_name="Video muqova rasmi")
     add_time = models.DateField(auto_now_add=True)
-    dur = models.CharField(max_length=255, verbose_name="Video davomiyligi (misol:'23:14')")
+    dur = models.CharField(max_length=255,blank=True, verbose_name="Video davomiyligi (misol:'23:14')")
 
     def __str__(self):
         return self.title
@@ -48,24 +48,26 @@ class Videos(models.Model):
         db_table = 'Video'
 
 
-@receiver(post_save, sender=Videos)
+@receiver(post_save, sender=Video)
 def edit_admin(sender, instance, **kwargs):
     if instance.link:
-        instance.link = "https://mega.nz/embed/" + instance.link.split("/")[-1]
-        # instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
-        # if not instance.thumb:
-        #     instance.thumb = 'https://drive.google.com/thumbnail?id=' + link.split('/')[-2]
-        # else:
-        #     instance.thumb.name = 'media/' + instance.thumb.name
+        yt = YouTube(instance.link)
+        instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
+        if not instance.thumb:
+            instance.thumb = yt.thumbnail_url
+        else:
+            instance.thumb.name = 'media/' + instance.thumb.name
+        if not instance.desc:
+            instance.desc = yt.description
         # instance.save()
-        # thumb=instance.thumb,
-        # desc=instance.desc
         Videos.objects.filter(pk=instance.pk).update(
-            link=instance.link,
+            dur=instance.dur,
+            thumb=instance.thumb,
+            desc=instance.desc
         )
 
 
-class Images(models.Model):
+class Image(models.Model):
     image = models.ImageField(upload_to='images')
     compressed_image = models.ImageField(upload_to='images', blank=True)
     title = models.CharField(max_length=512)
@@ -98,7 +100,7 @@ class Images(models.Model):
         )
 
 
-class UpcomingEvents(models.Model):
+class UpcomingEvent(models.Model):
     image = models.ImageField(upload_to='images/', null=True)
     upcoming_date = models.DateField()
     title = models.CharField(max_length=256)
@@ -113,6 +115,11 @@ class UpcomingEvents(models.Model):
 class SubscribeEmail(models.Model):
     email = models.EmailField()
 
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20)
+    comment = models.TextField(max_length=2048)
+    date=models.DateField(auto_now_add=True)
 
 class VisitorCounter(models.Model):
     count = models.IntegerField(default=1)

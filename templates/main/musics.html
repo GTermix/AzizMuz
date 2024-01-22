@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-2">
                     <div class="header__logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                        <a href="{% url 'index' %}"><img src="{% static 'img/AXM.png' %}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-10 col-md-10">
@@ -46,7 +46,7 @@
                         <nav class="header__menu mobile-menu">
                             <ul>
                                 <li><a href="{% url 'index' %}">Home</a></li>
-                                <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
+                                <li><a href="{% url 'images' %}">Rasmlar</a></li>
                                 <li class="active"><a href="{% url 'musics' %}">Musiqalar</a></li>
                                 <li><a href="{% url 'videos' %}">Videolar</a></li>
                                 <li><a href="#">Sahifalar</a>
@@ -88,6 +88,7 @@
             <div class="row">
                 <div class="col-lg-7 p-0">
                     <div class="track__content nice-scroll">
+                        {% if musics %}
                         {% for index, i in musics %}
                         <div class="single_player_container">
                             <h4>{{i.title}}</h4>
@@ -125,6 +126,9 @@
                             </div>
                         </div>
                         {% endfor %}
+                        {% else %}
+                        <h3 class="no-content">Hozircha musiqalar mavjud emas</h3>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-5 p-0">
@@ -153,7 +157,7 @@
                             <li>
                                 <i class="fa fa-envelope"></i>
                                 <p>Email</p>
-                                <h6>DJ.Music@gmail.com</h6>
+                                <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
                             </li>
                         </ul>
                     </div>
@@ -171,10 +175,11 @@
                 </div>
                 <div class="col-lg-3 offset-lg-1 col-md-6">
                     <div class="footer__newslatter">
-                        <h4>Biz bilan qoling 😉</h4>
-                        <form action="#">
-                            <input type="text" placeholder="Email">
-                            <button type="submit"><i class="fa fa-send-o"></i></button>
+                        <h4>Biz bilan qoling</h4>
+                        <form class="subscribe-form">
+                            {% csrf_token %}
+                            {{emailfield.email}}
+                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
                         </form>
                     </div>
                 </div>
@@ -193,6 +198,7 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/subscribe-handler.js' %}"></script>
 
     <!-- Music Plugin -->
     <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>

@@ -12,4 +12,5 @@ urlpatterns = [
     path('videos/', VideosView.as_view(), name='videos'),
     path('imgs-api/data/<int:number>', get_picture_links, name='get_picture_links'),
     path('imgs-api/cnt/', get_picture_links_count, name='get_picture_links_count'),
+    path('subscribe-email/', subscribe_email, name='subscribe-email'),
 ]

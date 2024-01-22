@@ -2932,3 +2932,27 @@ ol {
 		background-position: top 0 left 19%;
 	}
 }
+
+.no-content {
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+h3.m {
+	margin: 15% auto;
+}
+
+.l-c {
+  color: black;
+}
+
+.l-c:hover {
+  color: black;
+}
+.l-c-w {
+  color: white;
+}
+
+.l-c-w:hover {
+  color: white;
+}

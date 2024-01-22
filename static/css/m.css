@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap");
+
+.ad-banner {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  z-index: 10004;
+  bottom: 0;
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  border: 2px solid #4CAF50;
+  
+}
+img {
+  margin-right: auto;
+}
+.ad-banner::before {
+  content: "";
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  z-index: 10004;
+  height: 20vh;
+  background-color: #6363639f;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.3;
+}
+
+.ad-content {
+  font-family: "Kanit", sans-serif;
+  text-align: center;
+}
+
+.ad-content h2 {
+  font-size: 18px;
+  margin: auto;
+}
+
+.ad-content p {
+  font-size: 12px;
+  margin: 5px 0;
+  overflow: hidden;
+  display: -webkit-box;
+  padding: 0 5%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.cta-button {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  width: 20vw;
+  height: 100%;
+  background-color: rgba(255, 85, 0, 0.08);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10005;
+}
+.img-banner {
+  margin-left: 5%;
+  max-width: 15vw;
+  max-height: 100%;
+  object-fit: contain;
+}
+#ad-i {
+  cursor: pointer;
+  text-shadow: red;
+  color: rgb(182, 10, 10) !important;
+  position: static;
+  margin: auto;
+  font-size: 3rem;
+}
+@media only screen and (max-width: 600px) {
+  .ad-banner {
+    height: 8%;
+  }
+  .img-banner {
+    max-width: 15vw;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .ad-content {
+    font-size: 12px;
+  }
+  #ad-i {
+    position: inherit;
+    font-size: 3rem;
+    min-width: 15vw;
+  }
+  .cta-button {
+    background-color: rgba(255, 0, 0, 0.08);
+  }
+}

@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-2">
                     <div class="header__logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                        <a href="{% url 'index' %}"><img src="{% static 'img/AXM.png' %}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-10 col-md-10">
@@ -94,6 +94,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    {% if latest %}
                     <div class="section-title center-title">
                         <h2>Youtube feed</h2>
                         <h1>Latest videos</h1>
@@ -131,6 +132,9 @@
                             {% endfor %}
                         </div>
                     </div>
+                    {% else %}
+                    <h2 class="no-content m">Hozircha yangi videolar yo'q </h2>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -152,7 +156,7 @@
                             <li>
                                 <i class="fa fa-envelope"></i>
                                 <p>Email</p>
-                                <h6>DJ.Music@gmail.com</h6>
+                                <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
                             </li>
                         </ul>
                     </div>
@@ -171,9 +175,10 @@
                 <div class="col-lg-3 offset-lg-1 col-md-6">
                     <div class="footer__newslatter">
                         <h4>Stay With me</h4>
-                        <form action="#">
-                            <input type="text" placeholder="Email">
-                            <button type="submit"><i class="fa fa-send-o"></i></button>
+                        <form class="subscribe-form">
+                            {% csrf_token %}
+                            {{emailfield.email}}
+                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
                         </form>
                     </div>
                 </div>
@@ -192,6 +197,7 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/subscribe-handler.js' %}"></script>
 
     <!-- Music Plugin -->
     <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>

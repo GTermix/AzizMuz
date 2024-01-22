@@ -39,7 +39,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.min.css"
     /> -->
     <link rel="stylesheet" href="{% static 'css/album.css' %}" />
-    <title>Document</title>
+    <title>Images</title>
   </head>
   <body>
     <div id="preloder">
@@ -52,7 +52,7 @@
           <div class="col-lg-2 col-md-2">
             <div class="header__logo">
               <a href="{% url 'index' %}"
-                ><img src="{% static 'img/logo.png' %}" alt=""
+                ><img src="{% static 'img/AXM.png' %}" alt=""
               /></a>
             </div>
           </div>
@@ -61,10 +61,10 @@
               <nav class="header__menu mobile-menu">
                 <ul>
                   <li><a href="{% url 'index' %}">Home</a></li>
-                  <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
                   <li class="active">
-                    <a href="{% url 'musics' %}">Musiqalar</a>
+                    <a href="{% url 'images' %}">Rasmlar</a>
                   </li>
+                  <li><a href="{% url 'musics' %}">Musiqalar</a></li>
                   <li><a href="{% url 'videos' %}">Videolar</a></li>
                   <li>
                     <a href="#">Sahifalar</a>
@@ -92,6 +92,7 @@
     <!-- Header Section End -->
 
     <div class="grid-container">
+      {% if album %}
       {% for item in album %}
       <div class="grid-item">
           <img
@@ -105,6 +106,9 @@
           </div>
       </div>
       {% endfor %}
+      {% else %}
+      <h3 class="no-content m">Hozircha rasmlar mavjud emas</h3>
+      {% endif %}
     </div>
     <div class="bottom">
       </div>
@@ -127,7 +131,7 @@
                 <li>
                   <i class="fa fa-envelope"></i>
                   <p>Email</p>
-                  <h6>DJ.Music@gmail.com</h6>
+                  <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
                 </li>
               </ul>
             </div>
@@ -146,10 +150,11 @@
           <div class="col-lg-3 offset-lg-1 col-md-6">
             <div class="footer__newslatter">
               <h4>Biz bilan qoling</h4>
-              <form action="#">
-                <input type="text" placeholder="Email" />
-                <button type="submit"><i class="fa fa-send-o"></i></button>
-              </form>
+              <form class="subscribe-form">
+                            {% csrf_token %}
+                            {{emailfield.email}}
+                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
+                        </form>
             </div>
           </div>
         </div>
@@ -163,5 +168,6 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/Isotope.js' %}"></script>
+    <script src="{% static 'js/subscribe-handler.js' %}"></script>
   </body>
 </html>
