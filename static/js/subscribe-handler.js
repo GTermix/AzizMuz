@@ -27,7 +27,4 @@ submitButton.addEventListener("click", () => {
   }
 });
 
-var adc = document.querySelector("#ad-i");
-adc.addEventListener("click", ()=>{
-  window.location.href="https://www.google.com";
-})
+

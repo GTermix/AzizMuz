@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/full_blog.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>{{post.title}}</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="bck">
+        <a href="javascript:void(0)" onclick="navigateToPostsPath()" id="arrw"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+      </div>
+      <div class="mm">
+        <a href="{% url 'index' %}" id="mnu"
+          ><img src="https://i.ibb.co/Fm5BcHZ/AXM.png" alt=""
+        /></a>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="data">
+        <h1 class="title p-d">{{post.title}}</h1>
+        <p class="post-date p-d">
+          {{ post.created_at|date:"M d, Y" }} - Xalillayev Azizbek
+        </p>
+      </div>
+      <hr />
+      <p class="content">{{post.text | linebreaksbr}}</p>
+      {% if post.image and post.video %}
+      <div class="media-container">
+        {% for i in post.video.all %}
+        <div class="media-item v">
+          <iframe
+            height="auto"
+            class="media-items ev"
+            src="https://www.youtube.com/embed/{{i.video_link}}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        {% endfor %}
+        {% for i in post.image.all %}
+        <div class="media-item">
+          <a
+            href="{{i.image}}"
+            target="_blank"
+          >
+            <img
+              class="media-items"
+              src="{{i.image}}"
+              alt="{{i}}"
+          /></a>
+        </div>
+        {% endfor %}
+
+        
+      </div>
+      {% endif %}
+    </div>
+    <div class="share">
+      <div class="lnk-sh">
+        <div class="ctn">
+          <h3 class="sht">Postni ulashish</h3>
+          <div class="shw">
+            <i class="fas fa-share" id="ss"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function navigateToPostsPath() {
+        history.back();
+      }
+    </script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src="{% static 'js/isotope.min.js' %}"></script>
+    <script src="{% static 'js/share-handler.js' %}"></script>
+    <script src="{% static 'js/full_blog.js' %}"></script>
+  </body>
+</html>

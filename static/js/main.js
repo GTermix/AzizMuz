@@ -143,12 +143,14 @@
 		Nice Scroll
 	--------------------- */
     $(".nice-scroll").niceScroll({
-        cursorcolor: "#111111",
-        cursorwidth: "5px",
-        background: "#e1e1e1",
-        cursorborder: "",
-        autohidemode: false,
-        horizrailenabled: false
+      cursorcolor: "#111111",
+      cursorwidth: "5px",
+      background: "#e1e1e1",
+      cursorborder: "",
+      autohidemode: false,
+      horizrailenabled: false,
+      emulatetouch: true,
+      bouncescroll: true,
     });
 
 })(jQuery);

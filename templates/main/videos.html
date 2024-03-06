@@ -2,190 +2,279 @@
 
 <!DOCTYPE html>
 <html lang="uz">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="DJoz Template">
-    <meta name="keywords" content="DJoz, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="DJoz Template" />
+    <meta name="keywords" content="DJoz, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Videos</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/barfiller.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/nowfont.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/rockville.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-</head>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/bootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/font-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/barfiller.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/nowfont.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/rockville.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/magnific-popup.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/slicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
+  </head>
 
-
-<body>
+  <body>
     <!-- Page Preloder -->
     <div id="preloder">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
 
     <!-- Header Section Begin -->
     <header class="header header--normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-md-2">
-                    <div class="header__logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/AXM.png' %}" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-10 col-md-10">
-                    <div class="header__nav">
-                        <nav class="header__menu mobile-menu">
-                            <ul>
-                                <li><a href="{% url 'index' %}">Home</a></li>
-                                <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                                <li><a href="{% url 'musics' %}">Musiqalar</a></li>
-                                <li class="active"><a href="{% url 'videos' %}">Videolar</a></li>
-                                <li><a href="#">Sahifalar</a>
-                                    <ul class="dropdown">
-                                        <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                                        <li><a href="./blog.html">Blog</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
-                            </ul>
-                        </nav>
-                        <div class="header__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-2">
+            <div class="header__logo">
+              <a href="{% url 'index' %}"
+                ><img src="{% static 'img/AXM.png' %}" alt=""
+              /></a>
             </div>
-            <div id="mobile-menu-wrap"></div>
+          </div>
+          <div class="col-lg-10 col-md-10">
+            <div class="header__nav">
+              <nav class="header__menu mobile-menu">
+                <ul>
+                  <li><a href="{% url 'index' %}">Home</a></li>
+                  <li><a href="{% url 'images' %}">Images</a></li>
+                  <li><a href="{% url 'musics' %}">Musiqalar</a></li>
+                  <li class="active">
+                    <a href="{% url 'videos' %}">Videolar</a>
+                  </li>
+                  <li><a href="{% url 'blogs' %}">Blog</a></li>
+                  <li>
+                    <a href="javascript:void(0)">Sahifalar</a>
+                    <ul class="dropdown">
+                      <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <div class="header__right__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
+        <div id="mobile-menu-wrap"></div>
+      </div>
     </header>
     <!-- Header Section End -->
 
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Videos</span>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb__links">
+              <a href="#"><i class="fa fa-home"></i> Home</a>
+              <span>Videos</span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Breadcrumb End -->
 
     <!-- Video Section Begin -->
     <section class="videos spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    {% if latest %}
-                    <div class="section-title center-title">
-                        <h2>Youtube feed</h2>
-                        <h1>Latest videos</h1>
-                    </div>
-                    <div class="videos__large__item set-bg" data-setbg="{{latest.thumb}}">
-                        <a href="{{latest.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
-                        <div class="videos__large__item__text">
-                            <h4>{{latest.title}}</h4>
-                            <ul>
-                                <li>{{latest.dur}}</li>
-                                <li>{{latest.add_time}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{latest.link}}" frameborder="1"
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            {% if latest %}
+            <div class="section-title center-title">
+              <h2>Youtube feed</h2>
+              <h1>Latest videos</h1>
+            </div>
+            <div
+              class="videos__large__item set-bg"
+              data-setbg="{{latest.thumb}}"
+            >
+              <a href="{{latest.link}}" class="play-btn video-popup"
+                ><i class="fa fa-play"></i
+              ></a>
+              <div class="videos__large__item__text">
+                <h4>{{latest.title}}</h4>
+                <ul>
+                  <li>{{latest.dur}}</li>
+                  <li>{{latest.add_time}}</li>
+                </ul>
+              </div>
+            </div>
+            <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{latest.link}}" frameborder="1"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media;?autoplay=1
                             gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-                    <div class="row">
-                        <div class="videos__slider owl-carousel">
-                            {% for i in list %}
-                            <div class="col-lg-3">
-                                <div class="videos__item">
-                                    <div class="videos__item__pic set-bg" data-setbg="{{i.thumb}}">
-                                        <a href="{{i.link}}" class="play-btn video-popup"><i class="fa fa-play"></i></a>
-                                    </div>
-                                    <div class="videos__item__text">
-                                        <h5>{{i.title}}</h5>
-                                        <ul>
-                                            <li>{{i.dur}}</li>
-                                            <li>{{i.add_time}}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
+            <div class="row">
+              <div class="videos__slider owl-carousel">
+                {% for i in list %}
+                <div class="col-lg-3">
+                  <div class="videos__item">
+                    <div
+                      class="videos__item__pic set-bg sbb"
+                      data-setbg="{{i.thumb}}"
+                    >
+                      <a href="{{i.link}}" class="play-btn video-popup"
+                        ><i class="fa fa-play"></i
+                      ></a>
                     </div>
-                    {% else %}
-                    <h2 class="no-content m">Hozircha yangi videolar yo'q </h2>
-                    {% endif %}
+                    <div class="videos__item__text">
+                      <h5>{{i.title}}</h5>
+                      <ul>
+                        <li>{{i.dur}}</li>
+                        <li>{{i.add_time}}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
+                {% endfor %}
+              </div>
             </div>
+            {% else %}
+            <h2 class="no-content m">Hozircha yangi videolar yo'q</h2>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </section>
     <!-- Video Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer footer--normal spad set-bg" data-setbg="{% static 'img/footer-bg.png' %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer__address">
-                        <ul>
-                            <li>
-                                <i class="fa fa-phone"></i>
-                                <p>Phone</p>
-                                <h6>1-677-124-44227</h6>
-                            </li>
-                            <li>
-                                <i class="fa fa-envelope"></i>
-                                <p>Email</p>
-                                <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1 col-md-6">
-                    <div class="footer__social">
-                        <h2>DJoz</h2>
-                        <div class="footer__social__links">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6">
-                    <div class="footer__newslatter">
-                        <h4>Stay With me</h4>
-                        <form class="subscribe-form">
-                            {% csrf_token %}
-                            {{emailfield.email}}
-                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
-                        </form>
-                    </div>
-                </div>
+    <footer
+      class="footer footer--normal spad set-bg"
+      data-setbg="{% static 'img/footer-bg.png' %}"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="footer__address">
+              <ul>
+                <li>
+                  <i class="fa fa-phone"></i>
+                  <p>Phone</p>
+                  <h6>1-677-124-44227</h6>
+                </li>
+                <li>
+                  <i class="fa fa-envelope"></i>
+                  <p>Email</p>
+                  <h6>
+                    <a class="l-c-w" href="mailto:DJ.Music@gmail.com"
+                      >DJ.Music@gmail.com</a
+                    >
+                  </h6>
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 col-md-6">
+            <div class="footer__social">
+              <h2>DJoz</h2>
+              <div class="footer__social__links">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 offset-lg-1 col-md-6">
+            <div class="footer__newslatter">
+              <h4>Stay With me</h4>
+              <form class="subscribe-form">
+                {% csrf_token %} {{emailfield.email}}
+                <button type="button" class="send-btn">
+                  <i class="fa fa-send-o"></i>
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
     <!-- Footer Section End -->
+
+    <div class="ad-banner">
+      <img
+        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
+        alt="Ad Banner"
+        class="img-banner"
+      />
+      <div class="ad-content">
+        <h2>Special Offer!</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
+          asperiores dolorum itaque architecto, vel, omnis tempore veniam
+          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
+          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
+          sapiente expedita deserunt voluptas architecto distinctio quod dolores
+        </p>
+      </div>
+      <a href="https://bigassmessage.com/" class="cta-button"
+        ><i class="fas fa-arrow-right" id="ad-i"></i
+      ></a>
+    </div>
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -202,6 +291,5 @@
     <!-- Music Plugin -->
     <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
     <script src="{% static 'js/jplayerInit.js' %}"></script>
-</body>
-
+  </body>
 </html>

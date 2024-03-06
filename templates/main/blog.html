@@ -1,361 +1,246 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="DJoz Template" />
+    <meta name="keywords" content="DJoz, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Blog Posts</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="DJoz Template">
-    <meta name="keywords" content="DJoz, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DJoz | Template</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="css/nowfont.css" type="text/css">
-    <link rel="stylesheet" href="css/rockville.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
-
-<body>
-    <!-- Page Preloder -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/bootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/font-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/barfiller.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/nowfont.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/rockville.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/magnific-popup.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/slicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css" />
+  </head>
+  <body>
     <div id="preloder">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
 
     <!-- Header Section Begin -->
     <header class="header header--normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-md-2">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-10 col-md-10">
-                    <div class="header__nav">
-                        <nav class="header__menu mobile-menu">
-                            <ul>
-                                <li><a href="./index.html">Home</a></li>
-                                <li><a href="./about.html">About</a></li>
-                                <li><a href="./discography.html">Discography</a></li>
-                                <li><a href="./tours.html">Tours</a></li>
-                                <li><a href="./videos.html">Videos</a></li>
-                                <li class="active"><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="./about.html">About</a></li>
-                                        <li><a href="./blog.html">Blog</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="./contact.html">Contact</a></li>
-                            </ul>
-                        </nav>
-                        <div class="header__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-2">
+            <div class="header__logo">
+              <a href="{% url 'index' %}"
+                ><img src="{% static 'img/AXM.png' %}" alt=""
+              /></a>
             </div>
-            <div id="mobile-menu-wrap"></div>
+          </div>
+          <div class="col-lg-10 col-md-10">
+            <div class="header__nav">
+              <nav class="header__menu mobile-menu">
+                <ul>
+                  <li><a href="{% url 'index' %}">Home</a></li>
+                  <li><a href="{% url 'images' %}">Rasmlar</a></li>
+                  <li class="active">
+                    <a href="{% url 'musics' %}">Musiqalar</a>
+                  </li>
+                  <li><a href="{% url 'videos' %}">Videolar</a></li>
+                  <li class="active"><a href="{% url 'blogs' %}">Blog</a></li>
+                  <li>
+                    <a href="javascript:void(0)">Sahifalar</a>
+                    <ul class="dropdown">
+                      <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <div class="header__right__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
+        <div id="mobile-menu-wrap"></div>
+      </div>
     </header>
     <!-- Header Section End -->
 
     <!-- Breadcrumb Begin -->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Blog</span>
-                    </div>
-                </div>
+    <div class="breadcrumb-option" style="padding-bottom: 10px">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb__links">
+              <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a>
+              <span>Blog</span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Breadcrumb End -->
-
-    <!-- Blog Section Begin -->
-    <section class="blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-title">
-                        <h2>Latest posts</h2>
-                        <h1>Music blog</h1>
-                    </div>
-                    <div class="blog__large">
-                        <div class="blog__large__pic set-bg" data-setbg="img/blog/large-item.jpg">
-                            <a href="#"><i class="fa fa-share-alt"></i></a>
-                        </div>
-                        <div class="blog__large__text">
-                            <span>Music festival</span>
-                            <h4>Guidelines for music festival event organisers: music festival harm reduction - December
-                                2019</h4>
-                            <p>Lorem ipsum dolor consectetur adipiscing eiusmod tempor incididunt ut labore et dolore
-                            </p>
-                            <div class="blog__large__widget">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <ul>
-                                            <li>By <span>Erna O’Conner</span></li>
-                                            <li>Dec 17, 2019</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <ul class="right__widget">
-                                            <li>230 Views</li>
-                                            <li>18 Comments</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-1.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>World Music Festival | Free Events & Concerts in Chicago</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-2.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>How ROQU Media and The Manual London staged Saudi…</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-3.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>2019 Festival of the Sun music event, Port Macquarie</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-4.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>Taylor Swift to Headline Glaston Music Festival</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-5.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>24-hour festival Inner City Electronic returns</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="blog__item">
-                                <div class="blog__item__pic">
-                                    <img src="img/blog/blog-6.jpg" alt="">
-                                </div>
-                                <div class="blog__item__text">
-                                    <span>Music festival</span>
-                                    <h5>Lost Paradise festival cancelled amid bushfire danger</h5>
-                                    <ul>
-                                        <li>By <span>Erna O’Conner</span></li>
-                                        <li>Dec 17, 2019</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="pagination__links blog__pagination">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">Next</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="blog__sidebar">
-                        <div class="blog__sidebar__item">
-                            <div class="blog__sidebar__title">
-                                <h4>Subscribe newsletter</h4>
-                            </div>
-                            <p>Ipsum dolor sit amet, adipiscing elit, sed eiusmod </p>
-                            <form action="#">
-                                <input type="text" placeholder="Name">
-                                <input type="text" placeholder="Email">
-                                <button type="submit" class="site-btn">Subscribe</button>
-                            </form>
-                        </div>
-                        <div class="blog__sidebar__item">
-                            <div class="blog__sidebar__title">
-                                <h4>Social media</h4>
-                            </div>
-                            <div class="blog__sidebar__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-dribbble"></i></a>
-                            </div>
-                        </div>
-                        <div class="blog__sidebar__item">
-                            <div class="blog__sidebar__title">
-                                <h4>Recent posts</h4>
-                            </div>
-                            <a href="#" class="recent__item">
-                                <div class="recent__item__pic">
-                                    <img src="img/blog/br-1.jpg" alt="">
-                                </div>
-                                <div class="recent__item__text">
-                                    <h6>2020 Bendigo Blues and Roots Music Festival…</h6>
-                                    <span>Dec 17, 2019</span>
-                                </div>
-                            </a>
-                            <a href="#" class="recent__item">
-                                <div class="recent__item__pic">
-                                    <img src="img/blog/br-2.jpg" alt="">
-                                </div>
-                                <div class="recent__item__text">
-                                    <h6>2020 Bendigo Blues and Roots Music Festival…</h6>
-                                    <span>Dec 17, 2019</span>
-                                </div>
-                            </a>
-                            <a href="#" class="recent__item">
-                                <div class="recent__item__pic">
-                                    <img src="img/blog/br-3.jpg" alt="">
-                                </div>
-                                <div class="recent__item__text">
-                                    <h6>2020 Bendigo Blues and Roots Music Festival…</h6>
-                                    <span>Dec 17, 2019</span>
-                                </div>
-                            </a>
-                            <a href="#" class="recent__item">
-                                <div class="recent__item__pic">
-                                    <img src="img/blog/br-4.jpg" alt="">
-                                </div>
-                                <div class="recent__item__text">
-                                    <h6>2020 Bendigo Blues and Roots Music Festival…</h6>
-                                    <span>Dec 17, 2019</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Blog Section End -->
+    <div class="posts-wrapper">
+      {% if post %}
+      {% for i in post %}
+      <div class="post-wrapper">
+        <a href="{{i.pk}}" class="anchor">
+          <div class="data">
+            <h1 class="post-title p-d">{{ i.title }}</h1>
+            <span class="post-date p-d">{{ i.created_at|date:"M d, Y" }}</span>
+          </div>
+          <p class="content">{{ i.text }}</p>
+          {% if i.medias %}
+          <hr />
+          <div class="media">
+            <i class="fa fa-paperclip is" id="clip"></i>
+            <p class="is">{{i.medias}} files attached</p>
+          </div>
+          {% endif %}
+          <div class="views-class">
+            <span class="views v">{{i.views}}</span>
+            <i class="fa-regular fa-eye v" id="views"></i>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+      {% else %}
+      <h3 class="no-content m">Hozircha rasmlar mavjud emas</h3>
+      {% endif %}
+    </div>
 
     <!-- Footer Section Begin -->
-    <footer class="footer footer--normal spad set-bg" data-setbg="img/footer-bg.png">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer__address">
-                        <ul>
-                            <li>
-                                <i class="fa fa-phone"></i>
-                                <p>Phone</p>
-                                <h6>1-677-124-44227</h6>
-                            </li>
-                            <li>
-                                <i class="fa fa-envelope"></i>
-                                <p>Email</p>
-                                <h6>DJ.Music@gmail.com</h6>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1 col-md-6">
-                    <div class="footer__social">
-                        <h2>DJoz</h2>
-                        <div class="footer__social__links">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6">
-                    <div class="footer__newslatter">
-                        <h4>Stay With me</h4>
-                        <form action="#">
-                            <input type="text" placeholder="Email">
-                            <button type="submit"><i class="fa fa-send-o"></i></button>
-                        </form>
-                    </div>
-                </div>
+    <footer
+      class="footer footer--normal spad set-bg"
+      data-setbg="{% static 'img/footer-bg.png' %}"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="footer__address">
+              <ul>
+                <li>
+                  <i class="fa fa-phone"></i>
+                  <p>Telefon raqam</p>
+                  <h6>1-677-124-44227</h6>
+                </li>
+                <li>
+                  <i class="fa fa-envelope"></i>
+                  <p>Email</p>
+                  <h6>
+                    <a class="l-c-w" href="mailto:DJ.Music@gmail.com"
+                      >DJ.Music@gmail.com</a
+                    >
+                  </h6>
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 col-md-6">
+            <div class="footer__social">
+              <h2>AzizMuz</h2>
+              <div class="footer__social__links">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 offset-lg-1 col-md-6">
+            <div class="footer__newslatter">
+              <h4>Biz bilan qoling</h4>
+              <form class="subscribe-form">
+                {% csrf_token %} {{emailfield.email}}
+                <button type="button" class="send-btn">
+                  <i class="fa fa-send-o"></i>
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
     <!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script src="js/jquery.barfiller.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+    <div class="ad-banner">
+      <img
+        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
+        alt="Ad Banner"
+        class="img-banner"
+      />
+      <div class="ad-content">
+        <h2>Special Offer!</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
+          asperiores dolorum itaque architecto, vel, omnis tempore veniam
+          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
+          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
+          sapiente expedita deserunt voluptas architecto distinctio quod dolores
+        </p>
+      </div>
+      <a href="https://bigassmessage.com/" class="cta-button"
+        ><i class="fas fa-arrow-right" id="ad-i"></i
+      ></a>
+    </div>
 
-    <!-- Music Plugin -->
-    <script src="js/jquery.jplayer.min.js"></script>
-    <script src="js/jplayerInit.js"></script>
-</body>
-
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.barfiller.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/subscribe-handler.js' %}"></script>
+  </body>
 </html>

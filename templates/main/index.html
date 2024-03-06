@@ -98,14 +98,14 @@
                   <li><a href="{% url 'images' %}">Rasmlar</a></li>
                   <li><a href="{% url 'musics' %}">Musiqalar</a></li>
                   <li><a href="{% url 'videos' %}">Videolar</a></li>
+                  <li><a href="{% url 'blogs' %}">Blog</a></li>
                   <li>
-                    <a href="">Sahifalar</a>
+                    <a href="javascript:void(0)">Sahifalar</a>
                     <ul class="dropdown">
                       <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                      <li><a href="./blog-details.html">Blog Details</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
                     </ul>
                   </li>
-                  <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
                 </ul>
               </nav>
               <div class="header__right__social">
@@ -210,7 +210,7 @@
         </div>
         <div class="row">
           <div class="col-lg-7 p-0">
-            <div class="track__content nice-scroll">
+            <div class="track__content tcm">
               {% if musics %} {% for index, i in musics %}
               <div class="single_player_container">
                 <h4>{{i.title}}</h4>
@@ -342,7 +342,7 @@
     <!-- Services Section End -->
 
     <!-- Youtube Section Begin -->
-    <section class="youtube spad" style="padding-bottom: 500px">
+    <section class="youtube spad" style="padding-bottom: 20vh">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -362,7 +362,7 @@
                 ></a>
               </div>
               <div class="youtube__item__text">
-                <h4>{{i.title}}</h4>
+                <h4>{{i.title}} | {{i.add_time}}</h4>
               </div>
             </div>
           </div>
@@ -447,13 +447,13 @@
       <a href="https://bigassmessage.com/" class="cta-button"
         ><i class="fas fa-arrow-right" id="ad-i"></i
       ></a>
-    </div>
+    </div> 
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+    <!-- <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script> -->
     <script src="{% static 'js/jquery.barfiller.js' %}"></script>
     <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>

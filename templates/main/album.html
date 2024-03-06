@@ -7,7 +7,13 @@
     <meta name="keywords" content="DJoz, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Musics</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <link
       rel="stylesheet"
@@ -31,19 +37,21 @@
     />
     <link
       rel="stylesheet"
+      href="{% static 'css/magnific-popup.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
       href="{% static 'css/style.css' %}"
       type="text/css"
     />
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.min.css"
-    /> -->
     <link rel="stylesheet" href="{% static 'css/album.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
     <title>Images</title>
   </head>
   <body>
     <div id="preloder">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
     <!-- Header Section Begin -->
     <header class="header header--normal">
@@ -66,15 +74,14 @@
                   </li>
                   <li><a href="{% url 'musics' %}">Musiqalar</a></li>
                   <li><a href="{% url 'videos' %}">Videolar</a></li>
+                  <li><a href="{% url 'blogs' %}">Blog</a></li>
                   <li>
-                    <a href="#">Sahifalar</a>
+                    <a href="javascript:void(0)">Sahifalar</a>
                     <ul class="dropdown">
                       <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                      <li><a href="./blog.html">Blog</a></li>
-                      <li><a href="./blog-details.html">Blog Details</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
                     </ul>
                   </li>
-                  <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
                 </ul>
               </nav>
               <div class="header__right__social">
@@ -90,29 +97,37 @@
       </div>
     </header>
     <!-- Header Section End -->
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option" style="padding-bottom: 10px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb__links">
+              <a href="#"><i class="fa fa-home"></i> Home</a>
+              <span>Rasmlar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
 
     <div class="grid-container">
-      {% if album %}
-      {% for item in album %}
+      {% if album %} {% for item in album %}
       <div class="grid-item">
-          <img
-            src="{{item.image}}"
-            alt="{{item.title}}"
-            class="images"
-          />
+        <a href="{{item.image}}">
+          <img src="{{item.image}}" alt="{{item.title}}" class="images" />
           <div class="item-details">
             <h3>{{item.title}}</h3>
             <p>{{item.date}}</p>
           </div>
+        </a>
       </div>
-      {% endfor %}
-      {% else %}
+      {% endfor %} {% else %}
       <h3 class="no-content m">Hozircha rasmlar mavjud emas</h3>
       {% endif %}
     </div>
-    <div class="bottom">
-      </div>
-    </div>
+    <div class="bottom"></div>
     <!-- Footer Section Begin -->
     <footer
       class="footer footer--normal spad set-bg"
@@ -131,7 +146,11 @@
                 <li>
                   <i class="fa fa-envelope"></i>
                   <p>Email</p>
-                  <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
+                  <h6>
+                    <a class="l-c-w" href="mailto:DJ.Music@gmail.com"
+                      >DJ.Music@gmail.com</a
+                    >
+                  </h6>
                 </li>
               </ul>
             </div>
@@ -151,21 +170,45 @@
             <div class="footer__newslatter">
               <h4>Biz bilan qoling</h4>
               <form class="subscribe-form">
-                            {% csrf_token %}
-                            {{emailfield.email}}
-                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
-                        </form>
+                {% csrf_token %} {{emailfield.email}}
+                <button type="button" class="send-btn">
+                  <i class="fa fa-send-o"></i>
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </footer>
 
+    <div class="ad-banner">
+      <img
+        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
+        alt="Ad Banner"
+        class="img-banner"
+      />
+      <div class="ad-content">
+        <h2>Special Offer!</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
+          asperiores dolorum itaque architecto, vel, omnis tempore veniam
+          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
+          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
+          sapiente expedita deserunt voluptas architecto distinctio quod dolores
+        </p>
+      </div>
+      <a href="https://bigassmessage.com/" class="cta-button"
+        ><i class="fas fa-arrow-right" id="ad-i"></i
+      ></a>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
     <script src="{% static 'js/isotope.min.js' %}"></script>
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/istope.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/Isotope.js' %}"></script>
     <script src="{% static 'js/subscribe-handler.js' %}"></script>

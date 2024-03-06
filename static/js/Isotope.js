@@ -13,7 +13,7 @@ function initializeIsotope() {
   var grid = document.querySelector(".grid-container");
   const firstElement = grid.firstElementChild;
 
-  if (firstElement.tagName === "H3") {
+  if (!(firstElement.tagName === "H3")) {
     iso = new Isotope(grid, {
       itemSelector: ".grid-item",
       percentPosition: true,
@@ -81,14 +81,15 @@ window.addEventListener("load", () => {
     lazyLoadImages();
     ld = true;
     iso.layout();
-  } 
+  }
 });
 window.addEventListener("scroll", () => {
   const gridContainer = document.querySelector(".grid-container");
   const firstElement = gridContainer.firstElementChild;
-  if (!(firstElement.tagName === "H3")) {
-    lazyLoadImages();
+  const chl = gridContainer.childElementCount;
+  if (!(firstElement.tagName === "H3") && chl>10) {
     if (nl && ld) {
+      lazyLoadImages();
       iso.layout();
       const nextToLastElement = document.querySelector(
         ".grid-item:nth-last-child(2)"
@@ -197,9 +198,6 @@ var scrollEventListener = () => {
     if (!dn) {
       iso.layout();
       setTimeout(() => {
-        iso.once("arrangeComplete", function () {
-          console.log("arrange done, just this one time");
-        });
         iso.layout();
         nextToLastElement = document.querySelector(
           ".grid-item:nth-last-child(2)"
@@ -248,17 +246,31 @@ var observer = new IntersectionObserver((entries) => {
 
 function freezeScroll() {
   var top = window.scrollY || document.documentElement.scrollTop;
-  window.onscroll = function () {
+  window.onscroll = ()=> {
     window.scrollTo(0, top);
   };
 }
 
+function allowScroll() {
+  window.onscroll = null; // Remove the previously set onscroll event handler
+}
+
+
 var gridItems = document.querySelectorAll(".grid-item");
 
-gridItems.forEach(function (item) {
-  item.addEventListener("click", function () {
+gridItems.forEach((item) => {
+  item.addEventListener("click", () => {
     freezeScroll();
+    document.querySelector(".ad-banner").style.display = "none";
   });
+});
+
+// Add an event listener to the document to handle the click event for the close button
+document.addEventListener("click", (event) => {
+  if (event.target.classList.contains("mfp-close")) {
+    allowScroll();
+    document.querySelector(".ad-banner").style.display = "flex";
+  }
 });
 
 function uo() {
@@ -270,23 +282,3 @@ function uo() {
 }
 
 // window.addEventListener("scroll", uo);
-
-
-var submitButton = document.getElementById("submitButton");
-submitButton.addEventListener("click", function () {
-  var form = document.getElementById("myForm");
-  var formData = new FormData(form);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "your-server-url");
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        console.log("Form data submitted successfully");
-      } else {
-        console.error("Error submitting form data:", xhr.status);
-      }
-    }
-  };
-  xhr.send(formData);
-});

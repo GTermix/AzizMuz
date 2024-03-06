@@ -15,6 +15,13 @@
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <!-- Css Styles -->
     <link
@@ -63,6 +70,7 @@
       type="text/css"
     />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
   </head>
 
   <body>
@@ -87,19 +95,16 @@
               <nav class="header__menu mobile-menu">
                 <ul>
                   <li><a href="{% url 'index' %}">Home</a></li>
-                  <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
+                  <li><a href="{% url 'images' %}">Rasmlar</a></li>
                   <li><a href="{% url 'musics' %}">Musiqalar</a></li>
                   <li><a href="{% url 'videos' %}">Videolar</a></li>
-                  <li>
-                    <a href="">Sahifalar</a>
+                  <li><a href="{% url 'blogs' %}">Blog</a></li>
+                  <li class="active">
+                    <a href="javascript:void(0)">Sahifalar</a>
                     <ul class="dropdown">
                       <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                      <li><a href="./blog.html">Blog</a></li>
-                      <li><a href="./blog-details.html">Blog Details</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
                     </ul>
-                  </li>
-                  <li class="active">
-                    <a href="{% url 'contact' %}">Bog'lanish</a>
                   </li>
                 </ul>
               </nav>
@@ -247,6 +252,27 @@
       </div>
     </footer>
     <!-- Footer Section End -->
+
+    <div class="ad-banner">
+      <img
+        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
+        alt="Ad Banner"
+        class="img-banner"
+      />
+      <div class="ad-content">
+        <h2>Special Offer!</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
+          asperiores dolorum itaque architecto, vel, omnis tempore veniam
+          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
+          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
+          sapiente expedita deserunt voluptas architecto distinctio quod dolores
+        </p>
+      </div>
+      <a href="https://bigassmessage.com/" class="cta-button"
+        ><i class="fas fa-arrow-right" id="ad-i"></i
+      ></a>
+    </div>
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

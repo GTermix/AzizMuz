@@ -2,303 +2,410 @@
 
 <!DOCTYPE html>
 <html lang="uz">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="DJoz Template">
-    <meta name="keywords" content="DJoz, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="DJoz Template" />
+    <meta name="keywords" content="DJoz, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>About</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/barfiller.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/nowfont.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/rockville.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-</head>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/bootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/font-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/barfiller.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/nowfont.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/rockville.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/magnific-popup.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/slicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
+  </head>
 
-<body>
+  <body>
     <!-- Page Preloder -->
     <div id="preloder">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
 
     <!-- Header Section Begin -->
     <header class="header header--normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-md-2">
-                    <div class="header__logo">
-                        <a href="{% url 'index' %}"><img src="{% static 'img/AXM.png' %}" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-10 col-md-10">
-                    <div class="header__nav">
-                        <nav class="header__menu mobile-menu">
-                            <ul>
-                                <li><a href="{% url 'index' %}">Home</a></li>
-                                <li><a href="{% url 'images' %}">Rasmlar</a></li>
-                                <li><a href="{% url 'musics' %}">Musiqalar</a></li>
-                                <li><a href="{% url 'videos' %}">Videolar</a></li>
-                                <li class="active"><a href="">Sahifalar</a>
-                                    <ul class="dropdown">
-                                        <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
-                                        <li><a href="./blog.html">Blog</a></li>
-                                        <li><a href="./blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
-                            </ul>
-                        </nav>
-                        <div class="header__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-2">
+            <div class="header__logo">
+              <a href="{% url 'index' %}"
+                ><img src="{% static 'img/AXM.png' %}" alt=""
+              /></a>
             </div>
-            <div id="mobile-menu-wrap"></div>
+          </div>
+          <div class="col-lg-10 col-md-10">
+            <div class="header__nav">
+              <nav class="header__menu mobile-menu">
+                <ul>
+                  <li><a href="{% url 'index' %}">Home</a></li>
+                  <li><a href="{% url 'images' %}">Rasmlar</a></li>
+                  <li><a href="{% url 'musics' %}">Musiqalar</a></li>
+                  <li><a href="{% url 'videos' %}">Videolar</a></li>
+                  <li><a href="{% url 'blogs' %}">Blog</a></li>
+                  <li class="active">
+                    <a href="javascript:void(0)">Sahifalar</a>
+                    <ul class="dropdown">
+                      <li><a href="{% url 'about' %}">AzizMuz haqida</a></li>
+                      <li><a href="{% url 'contact' %}">Bog'lanish</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <div class="header__right__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
+        <div id="mobile-menu-wrap"></div>
+      </div>
     </header>
     <!-- Header Section End -->
 
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>About</span>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb__links">
+              <a href="#"><i class="fa fa-home"></i> Home</a>
+              <span>About</span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Breadcrumb End -->
 
     <!-- Skills Section Begin -->
     <section class="skills spad">
-
-        <div class="container">
-            <div class="last glow">
-            <div class="row">
-                <div class="col-lg-6 p-0">
-                    <div class="skills__content">
-                        <div class="section-title">
-                            <h2>Azizbek Xalillayev</h2>
-                            <h1>Mahorat</h1>
-                        </div>
-                        <p>DJ Rainflow knows how to move your mind, body and soul by delivering tracks that stand out
-                            from the norm.</p>
-                        <div class="skill__bar__item">
-                            <p>Perform</p>
-                            <div id="bar1" class="barfiller">
-                                <span class="tip"></span>
-                                <span class="fill" data-percentage="95"></span>
-                            </div>
-                        </div>
-                        <div class="skill__bar__item">
-                            <p>Use Midi</p>
-                            <div id="bar2" class="barfiller">
-                                <span class="tip"></span>
-                                <span class="fill" data-percentage="85"></span>
-                            </div>
-                        </div>
-                        <div class="skill__bar__item">
-                            <p>Remix and mash up</p>
-                            <div id="bar3" class="barfiller">
-                                <span class="tip"></span>
-                                <span class="fill" data-percentage="98"></span>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="last glow">
+          <div class="row">
+            <div class="col-lg-6 p-0">
+              <div class="skills__content">
+                <div class="section-title">
+                  <h2>Azizbek Xalillayev</h2>
+                  <h1>Mahorat</h1>
                 </div>
-                <div class="col-lg-6 p-0">
-                    <div class="skills__video set-bg" data-setbg="{% static 'img/skill-video.jpg' %}">
-                        <a href="https://www.youtube.com/watch?v=S19UcWdOA-I?autoplay=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
-                    </div>
+                <p>
+                  DJ Rainflow knows how to move your mind, body and soul by
+                  delivering tracks that stand out from the norm.
+                </p>
+                <div class="skill__bar__item">
+                  <p>Perform</p>
+                  <div id="bar1" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="95"></span>
+                  </div>
                 </div>
+                <div class="skill__bar__item">
+                  <p>Use Midi</p>
+                  <div id="bar2" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="85"></span>
+                  </div>
+                </div>
+                <div class="skill__bar__item">
+                  <p>Remix and mash up</p>
+                  <div id="bar3" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="98"></span>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="col-lg-6 p-0">
+              <div
+                class="skills__video set-bg"
+                data-setbg="{% static 'img/skill-video.jpg' %}"
+              >
+                <a
+                  href="https://www.youtube.com/watch?v=S19UcWdOA-I?autoplay=1"
+                  class="play-btn video-popup"
+                  ><i class="fa fa-play"></i
+                ></a>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Skills Section End -->
 
     <!-- About Section Begin -->
     <section class="about about--page spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="about__pic">
-                        <img src="{% static 'img/about/about.png' %}" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="about__text">
-                        <div class="section-title">
-                            <h2>He heard something that he knew to be music</h2>
-                        </div>
-                        <p>At vero eos et accusamus et iusto odi odgnissimos ducimus qui blanditiis praesentium volup
-                            tatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-                            cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi quod
-                            justo pro an.</p>
-                        <img src="{% static 'img/about/signature.png' %}" alt="">
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="about__pic">
+              <img src="{% static 'img/about/about.png' %}" alt="" />
             </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="about__text">
+              <div class="section-title">
+                <h2>He heard something that he knew to be music</h2>
+              </div>
+              <p>
+                At vero eos et accusamus et iusto odi odgnissimos ducimus qui
+                blanditiis praesentium volup tatum deleniti atque corrupti quos
+                dolores et quas molestias excepturi sint occaecati cupiditate
+                non provident, similique sunt in culpa qui officia deserunt
+                mollitia animi quod justo pro an.
+              </p>
+              <img src="{% static 'img/about/signature.png' %}" alt="" />
+            </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- About Section End -->
 
     <!-- About Pic Begin -->
     <div class="about-pic">
-        <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 p-0">
-                            <img src="{% static 'img/about/ap-1.jpg' %}" alt="">
-                            <img src="{% static 'img/about/ap-2.jpg' %}" alt="">
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 p-0">
-                            <img src="{% static 'img/about/ap-3.jpg' %}" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8 p-0">
-                            <img src="{% static 'img/about/ap-4.jpg' %}" alt="">
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 p-0">
-                            <img src="{% static 'img/about/ap-5.jpg' %}" alt="">
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 p-0">
-                            <img src="{% static 'img/about/ap-6.jpg' %}" alt="">
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 p-0">
-                            <img src="{% static 'img/about/ap-7.jpg' %}" alt="">
-                        </div>
-                    </div>
-                </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 p-0">
+                <img src="{% static 'img/about/ap-1.jpg' %}" alt="" />
+                <img src="{% static 'img/about/ap-2.jpg' %}" alt="" />
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 p-0">
+                <img src="{% static 'img/about/ap-3.jpg' %}" alt="" />
+              </div>
             </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-8 p-0">
+                <img src="{% static 'img/about/ap-4.jpg' %}" alt="" />
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 p-0">
+                <img src="{% static 'img/about/ap-5.jpg' %}" alt="" />
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 p-0">
+                <img src="{% static 'img/about/ap-6.jpg' %}" alt="" />
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 p-0">
+                <img src="{% static 'img/about/ap-7.jpg' %}" alt="" />
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <!-- About Pic End -->
 
     <!-- About Services Section Begin -->
     <section class="about-services spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title center-title">
-                        <h2>Xizmatlar</h2>
-                        <h1>Eng yaxshi servis</h1>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title center-title">
+              <h2>Xizmatlar</h2>
+              <h1>Eng yaxshi servis</h1>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="about__services__item">
-                        <div class="about__services__item__pic set-bg" data-setbg="{% static 'img/services/as-1.jpg' %}">
-                            <div class="icon">
-                                <img src="{% static 'img/services/as-icon-1.png' %}" alt="">
-                            </div>
-                        </div>
-                        <div class="about__services__item__text">
-                            <h4>To'y marosimlari</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="about__services__item">
-                        <div class="about__services__item__pic set-bg" data-setbg="{% static 'img/services/as-2.jpg' %}">
-                            <div class="icon">
-                                <img src="{% static 'img/services/as-icon-2.png' %}" alt="">
-                            </div>
-                        </div>
-                        <div class="about__services__item__text">
-                            <h4>Klub va barlarda</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="about__services__item">
-                        <div class="about__services__item__pic set-bg" data-setbg="{% static 'img/services/as-3.jpg' %}">
-                            <div class="icon">
-                                <img src="{% static 'img/services/as-icon-3.png' %}" alt="">
-                            </div>
-                        </div>
-                        <div class="about__services__item__text">
-                            <h4>Tug'ilgan kunlarda</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="about__services__item">
+              <div
+                class="about__services__item__pic set-bg"
+                data-setbg="{% static 'img/services/as-1.jpg' %}"
+              >
+                <div class="icon">
+                  <img src="{% static 'img/services/as-icon-1.png' %}" alt="" />
+                </div>
+              </div>
+              <div class="about__services__item__text">
+                <h4>To'y marosimlari</h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="about__services__item">
+              <div
+                class="about__services__item__pic set-bg"
+                data-setbg="{% static 'img/services/as-2.jpg' %}"
+              >
+                <div class="icon">
+                  <img src="{% static 'img/services/as-icon-2.png' %}" alt="" />
+                </div>
+              </div>
+              <div class="about__services__item__text">
+                <h4>Klub va barlarda</h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="about__services__item">
+              <div
+                class="about__services__item__pic set-bg"
+                data-setbg="{% static 'img/services/as-3.jpg' %}"
+              >
+                <div class="icon">
+                  <img src="{% static 'img/services/as-icon-3.png' %}" alt="" />
+                </div>
+              </div>
+              <div class="about__services__item__text">
+                <h4>Tug'ilgan kunlarda</h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <!-- About Services Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer footer--normal spad set-bg" data-setbg="{% static 'img/footer-bg.png' %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer__address">
-                        <ul>
-                            <li>
-                                <i class="fa fa-phone"></i>
-                                <p>Phone</p>
-                                <h6>1-677-124-44227</h6>
-                            </li>
-                            <li>
-                                <i class="fa fa-envelope"></i>
-                                <p>Email</p>
-                                <h6><a class="l-c-w" href="mailto:DJ.Music@gmail.com">DJ.Music@gmail.com</a></h6>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1 col-md-6">
-                    <div class="footer__social">
-                        <h2>DJoz</h2>
-                        <div class="footer__social__links">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6">
-                    <div class="footer__newslatter">
-                        <h4>Stay With me</h4>
-                        <form class="subscribe-form">
-                            {% csrf_token %}
-                            {{emailfield.email}}
-                            <button type="button" class="send-btn"><i class="fa fa-send-o"></i></button>
-                        </form>
-                    </div>
-                </div>
+    <footer
+      class="footer footer--normal spad set-bg"
+      data-setbg="{% static 'img/footer-bg.png' %}"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="footer__address">
+              <ul>
+                <li>
+                  <i class="fa fa-phone"></i>
+                  <p>Phone</p>
+                  <h6>1-677-124-44227</h6>
+                </li>
+                <li>
+                  <i class="fa fa-envelope"></i>
+                  <p>Email</p>
+                  <h6>
+                    <a class="l-c-w" href="mailto:DJ.Music@gmail.com"
+                      >DJ.Music@gmail.com</a
+                    >
+                  </h6>
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 col-md-6">
+            <div class="footer__social">
+              <h2>DJoz</h2>
+              <div class="footer__social__links">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 offset-lg-1 col-md-6">
+            <div class="footer__newslatter">
+              <h4>Stay With me</h4>
+              <form class="subscribe-form">
+                {% csrf_token %} {{emailfield.email}}
+                <button type="button" class="send-btn">
+                  <i class="fa fa-send-o"></i>
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
     <!-- Footer Section End -->
+
+    <div class="ad-banner">
+      <img
+        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
+        alt="Ad Banner"
+        class="img-banner"
+      />
+      <div class="ad-content">
+        <h2>Special Offer!</h2>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
+          asperiores dolorum itaque architecto, vel, omnis tempore veniam
+          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
+          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
+          sapiente expedita deserunt voluptas architecto distinctio quod dolores
+        </p>
+      </div>
+      <a href="https://bigassmessage.com/" class="cta-button"
+        ><i class="fas fa-arrow-right" id="ad-i"></i
+      ></a>
+    </div>
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -315,6 +422,5 @@
     <!-- Music Plugin -->
     <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
     <script src="{% static 'js/jplayerInit.js' %}"></script>
-</body>
-
+  </body>
 </html>

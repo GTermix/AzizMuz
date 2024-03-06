@@ -127,6 +127,20 @@ class AlbumView(View):
         return resp
 
 
+class PostBlogView(View):
+    email_field = SubscribeNews
+    def get(self,req):
+        posts = Post.objects.order_by('-id')[:10]
+        return render(req,"main/blog.html",{'post':posts,"emailfield": self.email_field})
+
+
+class BlogDetailView(View):
+    def get(self,req,pk):
+        post = Post.objects.get(id=pk)
+        post.increase_views
+        return render(req,'main/full_blog.html',{"post":post})
+
+
 def get_picture_links(request,number):
     try:
         number=int(number)
@@ -172,6 +186,11 @@ def image_download(request, image_name):
     else:
         image = get_object_or_404(Image, compressed_image="images/" + image_name)
         image_path = image.compressed_image.path
+    return FileResponse(open(image_path, 'rb'),as_attachment=False)
+
+def image_download_blog(request, image_name):
+    image = get_object_or_404(ImageForBlog, image="images/" + image_name)
+    image_path = image.image.path
     return FileResponse(open(image_path, 'rb'),as_attachment=False)
 
 def subscribe_email(req):

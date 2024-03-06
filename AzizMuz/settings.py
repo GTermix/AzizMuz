@@ -14,12 +14,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["azizmusics.onrender.com",
                  "127.0.0.1",
-                 "192.168.0.104"]
+                 "192.168.0.104",
+                 "192.168.0.102",
+                 "192.168.0.100",
+                 ]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    "unfold",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

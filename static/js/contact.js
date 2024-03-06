@@ -1,3 +1,12 @@
+document
+  .querySelector(".number-form")
+  .addEventListener('keydown', (event)=> {
+  // Allow numbers, space, plus sign, left bracket, right bracket, and backspace
+  if (!(event.key.match(/[0-9\s\+\-\(\)]/) || event.key === "Backspace")) {
+    event.preventDefault();
+  }
+  });
+
 var submitButton = document.querySelector(".site-btn");
 submitButton.addEventListener("click", () => {
   var phoneNumberInput = document.querySelector(".number-form");
@@ -17,12 +26,10 @@ submitButton.addEventListener("click", () => {
     var numbers = phoneNumber.replace(/\D/g, "");
     console.log(numbers);
     if (e == "+" && r != "998") {
-      alert(
-        s.a
-      );
+      alert(s.a);
       o *= 0;
     }
-    if (e!="+" && q == "998" && numbers.length > 9) {
+    if (e != "+" && q == "998" && numbers.length > 9) {
       alert("Telefon raqami yaroqli emas");
       o *= 0;
     }
