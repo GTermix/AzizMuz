@@ -54,6 +54,11 @@
     />
     <link
       rel="stylesheet"
+      href="{% static 'css/nowfont.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
       href="{% static 'css/slicknav.min.css' %}"
       type="text/css"
     />
@@ -62,8 +67,8 @@
       href="{% static 'css/style.css' %}"
       type="text/css"
     />
-    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
     <link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" type="text/css" />
   </head>
   <body>
     <div id="preloder">
@@ -87,9 +92,7 @@
                 <ul>
                   <li><a href="{% url 'index' %}">Home</a></li>
                   <li><a href="{% url 'images' %}">Rasmlar</a></li>
-                  <li class="active">
-                    <a href="{% url 'musics' %}">Musiqalar</a>
-                  </li>
+                  <li><a href="{% url 'musics' %}">Musiqalar</a></li>
                   <li><a href="{% url 'videos' %}">Videolar</a></li>
                   <li class="active"><a href="{% url 'blogs' %}">Blog</a></li>
                   <li>
@@ -130,8 +133,7 @@
     </div>
     <!-- Breadcrumb End -->
     <div class="posts-wrapper">
-      {% if post %}
-      {% for i in post %}
+      {% if post %} {% for i in post %}
       <div class="post-wrapper">
         <a href="{{i.pk}}" class="anchor">
           <div class="data">
@@ -152,9 +154,8 @@
           </div>
         </a>
       </div>
-      {% endfor %}
-      {% else %}
-      <h3 class="no-content m">Hozircha rasmlar mavjud emas</h3>
+      {% endfor %} {% else %}
+      <h3 class="no-content m c-m">Hozircha blog postlar mavjud emas</h3>
       {% endif %}
     </div>
 
@@ -212,26 +213,24 @@
     </footer>
     <!-- Footer Section End -->
 
+    {% if event %}
     <div class="ad-banner">
+      {% if event.image %}
       <img
-        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
-        alt="Ad Banner"
+        src="{{event.image}}"
+        alt="{{event.title}}"
         class="img-banner"
       />
+      {% endif %}
       <div class="ad-content">
-        <h2>Special Offer!</h2>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
-          asperiores dolorum itaque architecto, vel, omnis tempore veniam
-          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
-          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
-          sapiente expedita deserunt voluptas architecto distinctio quod dolores
-        </p>
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.description | linebreaksbr }}</p>
       </div>
-      <a href="https://bigassmessage.com/" class="cta-button"
+      <a href="{{ event.link }}" class="cta-button"
         ><i class="fas fa-arrow-right" id="ad-i"></i
       ></a>
     </div>
+    {% endif %}
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

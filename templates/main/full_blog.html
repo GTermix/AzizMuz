@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/full_blog.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/m.css' %}" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -24,7 +25,7 @@
       </div>
       <div class="mm">
         <a href="{% url 'index' %}" id="mnu"
-          ><img src="https://i.ibb.co/Fm5BcHZ/AXM.png" alt=""
+          ><img src="{% static 'img/AXM.png' %}" alt=""
         /></a>
       </div>
     </nav>
@@ -32,7 +33,8 @@
       <div class="data">
         <h1 class="title p-d">{{post.title}}</h1>
         <p class="post-date p-d">
-          {{ post.created_at|date:"M d, Y" }} - Xalillayev Azizbek
+          {{ post.created_at|date:"M d, Y" }} -
+          <span class="signature">Azizbek Xalillayev</span>
         </p>
       </div>
       <hr />
@@ -50,22 +52,13 @@
             allowfullscreen
           ></iframe>
         </div>
-        {% endfor %}
-        {% for i in post.image.all %}
+        {% endfor %} {% for i in post.image.all %}
         <div class="media-item">
-          <a
-            href="{{i.image}}"
-            target="_blank"
-          >
-            <img
-              class="media-items"
-              src="{{i.image}}"
-              alt="{{i}}"
+          <a href="{{i.image}}" target="_blank">
+            <img class="media-items" src="{{i.image}}" alt="{{i}}"
           /></a>
         </div>
         {% endfor %}
-
-        
       </div>
       {% endif %}
     </div>

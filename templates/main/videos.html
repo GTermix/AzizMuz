@@ -71,6 +71,7 @@
       type="text/css"
     />
     <link rel="stylesheet" href="{% static 'css/m.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/video.css' %}" />
   </head>
 
   <body>
@@ -130,7 +131,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="breadcrumb__links">
-              <a href="#"><i class="fa fa-home"></i> Home</a>
+              <a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a>
               <span>Videos</span>
             </div>
           </div>
@@ -151,45 +152,20 @@
             </div>
             <div
               class="videos__large__item set-bg"
+              id="main-video"
               data-setbg="{{latest.thumb}}"
             >
-              <a href="{{latest.link}}" class="play-btn video-popup"
+              <a
+                href="https://www.youtube.com/watch?v={{latest.link}}"
+                class="play-btn video-popup main-player-button linker-main"
                 ><i class="fa fa-play"></i
               ></a>
               <div class="videos__large__item__text">
-                <h4>{{latest.title}}</h4>
+                <h4 class="main-title">{{latest.title}}</h4>
                 <ul>
-                  <li>{{latest.dur}}</li>
-                  <li>{{latest.add_time}}</li>
+                  <li class="main-duration">{{latest.dur}}</li>
+                  <li class="main-date">{{latest.add_time}}</li>
                 </ul>
-              </div>
-            </div>
-            <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/{{latest.link}}" frameborder="1"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media;?autoplay=1
-                            gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-            <div class="row">
-              <div class="videos__slider owl-carousel">
-                {% for i in list %}
-                <div class="col-lg-3">
-                  <div class="videos__item">
-                    <div
-                      class="videos__item__pic set-bg sbb"
-                      data-setbg="{{i.thumb}}"
-                    >
-                      <a href="{{i.link}}" class="play-btn video-popup"
-                        ><i class="fa fa-play"></i
-                      ></a>
-                    </div>
-                    <div class="videos__item__text">
-                      <h5>{{i.title}}</h5>
-                      <ul>
-                        <li>{{i.dur}}</li>
-                        <li>{{i.add_time}}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
               </div>
             </div>
             {% else %}
@@ -198,8 +174,59 @@
           </div>
         </div>
       </div>
+      <div class="grid-container">
+        {% for i in list %}
+        <div class="grid-item">
+          <iframe
+            height="100%"
+            class="media-items ev"
+            src="https://www.youtube.com/embed/{{i.link}}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        {% endfor %}
+      </div>
+      {% if cnt %}
+      <div class="pagination" count="{{cnt}}">
+        <button class="first" disabled>First</button>
+        <button class="previous" disabled>Previous</button>
+        <span class="page-numbers">
+          <span class="num current">1</span>
+          <span class="num" {% if not cnt > 1 %}style="display: none"{% endif %}>2</span>
+          <span class="num" {% if not cnt > 2 %}style="display: none"{% endif %}>3</span>
+        </span>
+        <button class="next" {% if not cnt > 1 %}disabled{% endif %}>Next</button>
+        <button class="last" {% if not cnt > 1 %}disabled{% endif %}>Last</button>
+      </div>
+      {% endif %}
     </section>
     <!-- Video Section End -->
+
+    {% if lst %}
+    <section class="videos-all">
+      <details id="all">
+        <summary>Barcha videolar</summary>
+        <article class="all-videos">
+          {% for i in lst %}
+          <div class="video-object" code="{{i.code}}">
+            <img
+              src="{{i.thumb}}"
+              alt="{{i.title}}"
+              loading="lazy"
+              class="thumb-video"
+            />
+            <div class="details-v">
+              <h4 class="title-vid tv">{{i.title}}</h4>
+              <p class="date-vid tv">{{i.add_time}}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </article>
+      </details>
+    </section>
+    {% endif %}
 
     <!-- Footer Section Begin -->
     <footer
@@ -255,26 +282,24 @@
     </footer>
     <!-- Footer Section End -->
 
+    {% if event %}
     <div class="ad-banner">
+      {% if event.image %}
       <img
-        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
-        alt="Ad Banner"
+        src="{{event.image}}"
+        alt="{{event.title}}"
         class="img-banner"
       />
+      {% endif %}
       <div class="ad-content">
-        <h2>Special Offer!</h2>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
-          asperiores dolorum itaque architecto, vel, omnis tempore veniam
-          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
-          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
-          sapiente expedita deserunt voluptas architecto distinctio quod dolores
-        </p>
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.description | linebreaksbr }}</p>
       </div>
-      <a href="https://bigassmessage.com/" class="cta-button"
+      <a href="{{ event.link }}" class="cta-button"
         ><i class="fas fa-arrow-right" id="ad-i"></i
       ></a>
     </div>
+    {% endif %}
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -286,6 +311,9 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/freezer.js' %}"></script>
+    <script src="{% static 'js/istope.js' %}"></script>
+    <script src="{% static 'js/videos.js' %}"></script>
     <script src="{% static 'js/subscribe-handler.js' %}"></script>
 
     <!-- Music Plugin -->

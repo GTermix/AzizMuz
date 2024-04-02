@@ -1,4 +1,6 @@
+import pytz
 from pathlib import Path
+from mimetypes import add_type
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-oty2kh^s6x@^v$m!gjhcs+i8h9#+rwx53$)2u4y@453rlm81tj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["azizmusics.onrender.com",
                  "127.0.0.1",
@@ -21,6 +23,9 @@ ALLOWED_HOSTS = ["azizmusics.onrender.com",
 
 # Application definition
 
+from mimetypes import add_type
+add_type("text/css", ".css")
+
 INSTALLED_APPS = [
     "unfold",
     'django.contrib.admin',
@@ -30,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # My apps
-    'main.apps.MainConfig'
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -42,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.CacheMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'AzizMuz.urls'
@@ -99,7 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 

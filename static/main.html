@@ -1,0 +1,70 @@
+{% if latest_music.desc %}
+<p
+  style="
+    max-width: 400px;
+    text-align: center;
+    margin: 0 auto;
+    word-wrap: break-word;
+  "
+>
+  {{latest_music.desc}}
+</p>
+{% endif %}
+
+
+    <!-- Skills Section Begin -->
+    <section class="skills spad">
+      <div class="container">
+        <div class="last glow">
+          <div class="row">
+            <div class="col-lg-6 p-0">
+              <div class="skills__content">
+                <div class="section-title">
+                  <h2>Azizbek Xalillayev</h2>
+                  <h1>Mahorat</h1>
+                </div>
+                <p>
+                  DJ Rainflow knows how to move your mind, body and soul by
+                  delivering tracks that stand out from the norm.
+                </p>
+                <div class="skill__bar__item">
+                  <p>Perform</p>
+                  <div id="bar1" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="95"></span>
+                  </div>
+                </div>
+                <div class="skill__bar__item">
+                  <p>Use Midi</p>
+                  <div id="bar2" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="85"></span>
+                  </div>
+                </div>
+                <div class="skill__bar__item">
+                  <p>Remix and mash up</p>
+                  <div id="bar3" class="barfiller">
+                    <span class="tip"></span>
+                    <span class="fill" data-percentage="98"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 p-0">
+              <div
+                class="skills__video set-bg"
+                data-setbg="{% static 'img/skill-video.jpg' %}"
+              >
+                <a
+                  href="https://www.youtube.com/watch?v=S19UcWdOA-I?autoplay=1"
+                  class="play-btn video-popup"
+                  ><i class="fa fa-play"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Skills Section End -->
+

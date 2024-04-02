@@ -14,13 +14,15 @@ class VideoForBlogClass(admin.ModelAdmin):
 
 class ImagesClass(admin.ModelAdmin):
     exclude = ('compressed_image',)
+class VideosClass(admin.ModelAdmin):
+    exclude = ('dur','thumb','code')
 class PostClass(admin.ModelAdmin):
     exclude = ('views', 'medias')
 
-admin.site.register(Video)
+admin.site.register(Video, VideosClass)
 admin.site.register(Music)
 admin.site.register(ImageForBlog,ImageForBlogClass)
 admin.site.register(VideoForBlog,VideoForBlogClass)
 admin.site.register(Post,PostClass)
 admin.site.register(Image, ImagesClass)
-admin.site.register(UpcomingEvent)
+admin.site.register(Events)

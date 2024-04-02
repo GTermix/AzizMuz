@@ -12,12 +12,6 @@ from .models import *
 from django.http import FileResponse
 from .forms import *
 
-'''from pytube import YouTube
-
-yt = YouTube('[VIDEO_URL]')
-duration = yt.length
-'''
-
 
 class Index(View):
     email_field = SubscribeNews
@@ -37,22 +31,35 @@ class Index(View):
             videos_list = Video.objects.order_by('-id')[1:4]
         except:
             videos_list = []
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
+        
         return_context = {"latest_music": latest_music, "emailfield": self.email_field, "musics": musics,
-                          "videos": videos_list}
+                          "videos": videos_list,"event":event}
         return render(req, 'main/index.html',context=return_context)
 
 
 class About(View):
     email_field = SubscribeNews
     def get(self, req):
-        return render(req, 'main/about.html',context={"emailfield": self.email_field})
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
+        return render(req, 'main/about.html',context={"emailfield": self.email_field,"event":event})
 
 
 class ContactView(View):
     contact = ContactForm
     email_field = SubscribeNews
     def get(self, req):
-        return render(req, 'main/contact.html', context={"contact":self.contact,"emailfield": self.email_field})
+        try:
+            event=Events.objects.filter("-id").first()
+        except:
+            event=None
+        return render(req, 'main/contact.html', context={"contact":self.contact,"emailfield": self.email_field,"event":event})
 
     def post(self, req):
         phone_numbers = Contact.objects.values_list('phone_number', flat=True)
@@ -103,7 +110,11 @@ class MusicsView(View):
             musics = list(enumerate(Music.objects.order_by('-id'), start=1))
         except:
             musics = None
-        return render(req, 'main/musics.html', {'musics': musics,"emailfield": self.email_field})
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
+        return render(req, 'main/musics.html', {'musics': musics,"emailfield": self.email_field,"event":event})
 
 
 class VideosView(View):
@@ -111,27 +122,44 @@ class VideosView(View):
     def get(self, req):
         try:
             latest_video = Video.objects.order_by('-id')[0]
-            # latest_video.link = latest_video.link.split('=')[1]
             videos_list = Video.objects.order_by('-id')[1:]
+            videos_list_all = Video.objects.order_by('-id')
+            paginator = Paginator(videos_list, 6).num_pages
         except:
             latest_video = None
             videos_list = []
-        return render(req, 'main/videos.html', {"latest": latest_video, 'list': videos_list,"emailfield": self.email_field})
+            videos_list_all = []
+            paginator = 0
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
+        return render(req, 'main/videos.html', {"latest": latest_video, 
+                                                'list': videos_list[:6],"emailfield": self.email_field,
+                                                "cnt":paginator,"lst":videos_list_all,"event":event})
 
 
 class AlbumView(View):
     email_field = SubscribeNews
     def get(self, req):
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
         album = Image.objects.order_by('-id')[:10]
-        resp = render(req, 'main/album.html', {"album": album,"emailfield": self.email_field})
+        resp = render(req, 'main/album.html', {"album": album,"emailfield": self.email_field,"event":event})
         return resp
 
 
 class PostBlogView(View):
     email_field = SubscribeNews
     def get(self,req):
+        try:
+            event=Events.objects.latest()
+        except:
+            event=None
         posts = Post.objects.order_by('-id')[:10]
-        return render(req,"main/blog.html",{'post':posts,"emailfield": self.email_field})
+        return render(req,"main/blog.html",{'post':posts,"emailfield": self.email_field,"event":event})
 
 
 class BlogDetailView(View):
@@ -140,6 +168,29 @@ class BlogDetailView(View):
         post.increase_views
         return render(req,'main/full_blog.html',{"post":post})
 
+
+class VideosJsonView(View):
+    def get(self, request, *args, **kwargs):
+        videos_list = Video.objects.order_by('-id')[1:]
+        paginator = Paginator(videos_list, 6)  # 6 videos per page
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        # Convert the videos to JSON
+        videos_json = serializers.serialize('json', page_obj)
+
+        return JsonResponse({'videos': videos_json, 'count': paginator.count})
+
+
+class SendVideoData(View):
+    def  get(self,request,code):
+        obj = Video.objects.get(code=code)
+        formatted_date = obj.add_time.strftime('%b. %d, %Y')
+        data={"title":obj.title,"link":obj.link,"add_time":formatted_date,"duration":obj.dur,"thumb":obj.thumb}
+        return JsonResponse(data,status=200)
+        
+        
 
 def get_picture_links(request,number):
     try:
@@ -189,9 +240,14 @@ def image_download(request, image_name):
     return FileResponse(open(image_path, 'rb'),as_attachment=False)
 
 def image_download_blog(request, image_name):
-    image = get_object_or_404(ImageForBlog, image="images/" + image_name)
+    image = get_object_or_404(ImageForBlog, image="images/blog/" + image_name)
     image_path = image.image.path
     return FileResponse(open(image_path, 'rb'),as_attachment=False)
+
+def custom_404(request, exception):
+    from pprint import pprint
+    # pprint(exception)
+    return render(request, 'main/404.html', status=404)
 
 def subscribe_email(req):
     if req.method == 'POST':

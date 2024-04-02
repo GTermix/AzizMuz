@@ -215,13 +215,13 @@
                 </div>
               </div>
               {% endfor %} {% else %}
-              <h3 class="no-content">Hozircha musiqalar mavjud emas</h3>
+              <h3 class="no-content m c-m">Hozircha musiqalar mavjud emas</h3>
               {% endif %}
             </div>
           </div>
           <div class="col-lg-5 p-0 a-p">
             <div class="track__pic">
-              <img src="{% static 'img/track-right.jpg' %}" alt="" />
+              <img src="{% static 'img/music-right.jpg' %}" alt="" />
             </div>
           </div>
         </div>
@@ -283,26 +283,24 @@
     </footer>
     <!-- Footer Section End -->
 
+    {% if event %}
     <div class="ad-banner">
+      {% if event.image %}
       <img
-        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
-        alt="Ad Banner"
+        src="{{event.image}}"
+        alt="{{event.title}}"
         class="img-banner"
       />
+      {% endif %}
       <div class="ad-content">
-        <h2>Special Offer!</h2>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
-          asperiores dolorum itaque architecto, vel, omnis tempore veniam
-          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
-          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
-          sapiente expedita deserunt voluptas architecto distinctio quod dolores
-        </p>
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.description | linebreaksbr }}</p>
       </div>
-      <a href="https://bigassmessage.com/" class="cta-button"
+      <a href="{{ event.link }}" class="cta-button"
         ><i class="fas fa-arrow-right" id="ad-i"></i
       ></a>
     </div>
+    {% endif %}
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

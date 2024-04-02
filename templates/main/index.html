@@ -130,23 +130,24 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-            <div class="hero__text" {% if not latest_music %} style="visibility: hidden" {% endif %}>
+            <div
+              class="hero__text"
+              {%
+              if
+              not
+              latest_music
+              %}
+              style="visibility: hidden"
+              {%
+              endif
+              %}
+            >
               <!--Latest music-->
               <span>New {{latest_music.song_type}}</span>
               <h1>{{latest_music.title}}</h1>
-              {% if latest_music.desc %}
-              <p
-                style="
-                  max-width: 400px;
-                  text-align: center;
-                  margin: 0 auto;
-                  word-wrap: break-word;
-                "
-              >
-                {{latest_music.desc}}
-              </p>
-              {% endif %}
-              <a href="{{latest_music.link}}" class="play-btn video-popup"
+              <a
+                href="https://www.youtube.com/watch?v={{latest_music.link}}"
+                class="play-btn video-popup main-player-button"
                 ><i class="fa fa-play"></i
               ></a>
               <!-- End Latest music -->
@@ -279,7 +280,7 @@
           </div>
           <div class="col-lg-5 p-0">
             <div class="track__pic">
-              <img src="{% static 'img/track-right.jpg' %}" alt="" />
+              <img src="{% static 'img/music-right.jpg' %}" alt="" />
             </div>
           </div>
         </div>
@@ -357,12 +358,14 @@
           <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="youtube__item">
               <div class="youtube__item__pic set-bg" data-setbg="{{i.thumb}}">
-                <a href="{{i.link}}" class="play-btn video-popup"
+                <a
+                  href="https://www.youtube.com/watch?v={{i.link}}"
+                  class="play-btn video-popup main-player-button"
                   ><i class="fa fa-play"></i
                 ></a>
               </div>
               <div class="youtube__item__text">
-                <h4>{{i.title}} | {{i.add_time}}</h4>
+                <h4>{{i.title}} | <span class="t-i-c">{{i.add_time}}</span></h4>
               </div>
             </div>
           </div>
@@ -428,36 +431,30 @@
     </footer>
     <!-- Footer Section End -->
 
+    {% if event %}
     <div class="ad-banner">
-      <img
-        src="https://i.ibb.co/Wp48Yf3/62cfcc1272e407a3fabc24cfa5b38841.jpg"
-        alt="Ad Banner"
-        class="img-banner"
-      />
+      {% if event.image %}
+      <img src="{{event.image}}" alt="{{event.title}}" class="img-banner" />
+      {% endif %}
       <div class="ad-content">
-        <h2>Special Offer!</h2>
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo ut
-          asperiores dolorum itaque architecto, vel, omnis tempore veniam
-          impedit quas ea ipsum totam et! Voluptates, illum quas aliquam natus,
-          quia voluptatem fugit veritatis rerum sed cupiditate ipsum fuga
-          sapiente expedita deserunt voluptas architecto distinctio quod dolores
-        </p>
+        <h2>{{ event.title }}</h2>
+        <p>{{ event.description | linebreaksbr }}</p>
       </div>
-      <a href="https://bigassmessage.com/" class="cta-button"
+      <a href="{{ event.link }}" class="cta-button"
         ><i class="fas fa-arrow-right" id="ad-i"></i
       ></a>
-    </div> 
+    </div>
+    {% endif %}
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <!-- <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script> -->
     <script src="{% static 'js/jquery.barfiller.js' %}"></script>
     <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/freezer.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/subscribe-handler.js' %}"></script>
 

@@ -1,8 +1,10 @@
 import os
+import datetime
 import requests
+import uuid
 from AzizMuz.settings import MEDIA_ROOT
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,m2m_changed
 from django.core.validators import FileExtensionValidator
 from django.dispatch import receiver
 from django.urls import reverse
@@ -10,15 +12,14 @@ from django.utils.text import slugify
 from PIL import Image as Img
 from pytube import YouTube
 
+
+
 class Music(models.Model):
     title = models.CharField(max_length=256)
     music = models.FileField(upload_to='musics/',
                              validators=[FileExtensionValidator(['mp3', 'wav', 'ogg', 'm4a', 'wma'])])
-    music_photo = models.ImageField(upload_to='images/', null=True, blank=True)
+    # music_photo = models.ImageField(upload_to='images/', null=True, blank=True)
     upload_date = models.DateTimeField(auto_now_add=True)
-
-    def get_music_url(self):
-        return reverse('music_download', args=[self.music])
 
     def __str__(self):
         return self.title
@@ -38,34 +39,63 @@ class Video(models.Model):
     song_type = models.CharField(max_length=16, choices=CHOICES, default='single', verbose_name="Qo'shiq turi")
     title = models.CharField(max_length=128, verbose_name="Video sarlavhasi")
     desc = models.TextField(max_length=128, null=True, blank=True, verbose_name="Qo'shimcha tavsif")
-    thumb = models.ImageField(upload_to='images/',blank=True, verbose_name="Video muqova rasmi")
+    thumb = models.TextField(blank=True, verbose_name="Video muqova rasmi")
     add_time = models.DateField(auto_now_add=True)
-    dur = models.CharField(max_length=255,blank=True, verbose_name="Video davomiyligi (misol:'23:14')")
+    dur = models.CharField(max_length=255,blank=True)
+    code=models.CharField(max_length=64)
 
     def __str__(self):
         return self.title
 
     class Meta:
         db_table = 'Video'
+    
+    def save(self, *args, **kwargs):
+        import  re
+        if not len(self.link)==11:
+            l=str(self.link)
+            yt = YouTube(l)
+            yt_pattern = r'(https?://)?(www\.)?(youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})'
+            match = re.match(yt_pattern, self.link)
+            if match is not None:
+                self.link = match.group(4)
+            else:
+                pattern2 = r"(?:https?://)?(?:www\.)?youtu\.be/([^/?]+)"
+                video_code_match = re.match(pattern2,self.link).group(1)
+                self.video_link = video_code_match
+            time_delta = datetime.timedelta(seconds=yt.length)
+            p=str(time_delta)
+            self.dur = p[2:] if p.startswith("0:") else p[3:] if p.startswith("00:") else p
+            self.thumb = yt.thumbnail_url
+            if not self.desc:
+                self.desc = yt.description
+        super().save(*args,**kwargs)
+        pk=self.pk
+        a=uuid.uuid4().hex
+        n=Video.objects.filter(link=self.link)
+        code_ = f"{a[:16]}{pk}{a[16:]}"
+        f=Video.objects.filter(pk=pk)
+        f.update(code=code_)
+        
 
 
-@receiver(post_save, sender=Video)
-def edit_admin(sender, instance, **kwargs):
-    if instance.link:
-        yt = YouTube(instance.link)
-        instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
-        if not instance.thumb:
-            instance.thumb = yt.thumbnail_url
-        else:
-            instance.thumb.name = 'media/' + instance.thumb.name
-        if not instance.desc:
-            instance.desc = yt.description
-        # instance.save()
-        Video.objects.filter(pk=instance.pk).update(
-            dur=instance.dur,
-            thumb=instance.thumb,
-            desc=instance.desc
-        )
+# @receiver(post_save, sender=Video)
+# def edit_admin(sender, instance, **kwargs):
+#     if instance.link:
+#         yt = YouTube(instance.link)
+#         instance.dur = str(yt.length // 60) + ":" + str(yt.length % 60)
+#         if not instance.thumb:
+#             instance.thumb = yt.thumbnail_url
+#         else:
+#             instance.thumb.name = 'media/' + instance.thumb.name
+#         if not instance.desc:
+#             instance.desc = yt.description
+#         # instance.save()
+#         Video.objects.filter(pk=instance.pk).update(
+#             dur=instance.dur,
+#             thumb=instance.thumb,
+#             desc=instance.desc
+#         )
 
 
 class Image(models.Model):
@@ -82,21 +112,34 @@ class Image(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        album = Image.objects.order_by('-id').first()
-        old_file_path = os.path.join(MEDIA_ROOT, f'{album.image}')
-        new_file_path = os.path.join(MEDIA_ROOT, 'images', f'photo_{album.pk}.{str(album.image)[-3:]}')
-        os.rename(old_file_path,
-                  new_file_path)
+        obj = Image.objects.order_by('-id').first()
+        old_file_path = os.path.join(MEDIA_ROOT, f'{obj.image}')
+        img__=str(obj.image)
+        ext=img__[img__.find('.'):].lower()
+        new_file_path = os.path.join(MEDIA_ROOT, 'images', f'photo_{obj.pk}{ext}')
+        os.rename(old_file_path,new_file_path)
         image = Img.open(new_file_path)
         width, height = image.size
         new_size = (width // 2, height // 2)
         resized_image = image.resize(new_size)
-        new_file_pathc = os.path.join(MEDIA_ROOT, 'images', f'photoc_{album.pk}.{str(album.image)[-3:]}')
+        new_file_pathc = os.path.join(MEDIA_ROOT, 'images', f'photoc_{obj.pk}{ext}')
         resized_image.save(f'{new_file_pathc}', optimize=True, quality=1)
-        Image.objects.filter(pk=album.pk).update(
-            image=f'images/photo_{album.pk}.{str(album.image)[-3:]}',
-            compressed_image=f"images/photoc_{album.pk}.{str(album.image)[-3:]}"
-        )
+        Image.objects.filter(pk=obj.pk).update(image=f'images/photo_{obj.pk}{ext}',
+                                               compressed_image=f"images/photoc_{obj.pk}{ext}")
+
+
+class Events(models.Model):
+    title=models.CharField(max_length=128)
+    description=models.TextField()
+    image=models.ImageField(upload_to="images/event/",blank=True,null=True)
+    link=models.URLField(verbose_name="Event Link")
+
+    def __str__(self):
+        return f"{self.title}"
+
+    class Meta:
+        get_latest_by = 'id'
+        db_table = "Events"
 
 
 class UpcomingEvent(models.Model):
@@ -141,31 +184,26 @@ class ImageForBlog(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        album = ImageForBlog.objects.order_by('-id').first()
-        old_file_path = os.path.join(MEDIA_ROOT, f'{album.image}')
-        new_file_path = os.path.join(MEDIA_ROOT, 'images','blog', f'photo_{album.pk}.{str(album.image)[-3:]}')
-        os.rename(old_file_path,
-                  new_file_path)
-        ImageForBlog.objects.filter(pk=album.pk).update(
-            image=f'images/blog/photo_{album.pk}.{str(album.image)[-3:]}')
+        obj = ImageForBlog.objects.order_by('-id').first()
+        os.path
+        old_file_path = os.path.join(MEDIA_ROOT, *str(obj.image).split("/"))
+        img__=str(obj.image)
+        ext=img__[img__.find('.'):].lower()
+        new_file_path = os.path.join(MEDIA_ROOT, 'images','blog', f'photo_{obj.pk}{ext}')
+        os.rename(old_file_path,new_file_path)
+        ImageForBlog.objects.filter(pk=obj.pk).update(image=f'images/blog/photo_{obj.pk}{ext}')
 
 class VideoForBlog(models.Model):
-    ''' youtube video link to get its shortcut id like: ZyrT7mtd72Q or IBuvGvGG3wD&=sDWSCaSDcwDW3, from links like:https://www.youtube.com/watch?v=ZyrT7mtd72Q or https://youtu.be/3tCV6GfuL9U?si=thJtqsupO7MkdGTl'''
     video_link=models.CharField(max_length=256)
-
 
     def save(self, *args, **kwargs):
         import re
-        # regex pattern of only https://www.youtube.com/watch?v=ZyrT7mtd72Q links
         yt_pattern = r'(https?://)?(www\.)?(youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})'
         match = re.match(yt_pattern, self.video_link)
         if match is not None:
             self.video_link = match.group(4)
         else:
-            #try next link regex to find id of video
             pattern2 = r"(?:https?://)?(?:www\.)?youtu\.be/([^/?]+)"
-
-            # Extract the video code from the link
             video_code_match = re.match(pattern2,self.video_link).group(1)
             self.video_link = video_code_match
         super().save(*args,**kwargs)
@@ -179,7 +217,7 @@ class VideoForBlog(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=256)
     text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     views = models.IntegerField(default=0)
     image = models.ManyToManyField(ImageForBlog,blank=True, related_name='image_for_blog')
     video = models.ManyToManyField(VideoForBlog,blank=True, related_name='video_for_blog')
@@ -187,14 +225,12 @@ class Post(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        medias=self.image.count()+self.video.count()
-        #update medias  field in database
-        Post.objects.filter(pk=self.pk).update(medias=medias)
     
     def __str__(self):
         return f"{self.title} - {self.created_at}"
 
     class Meta:
+        get_latest_by = 'id'
         db_table = 'Post'
 
     # function to increase views count
@@ -202,6 +238,12 @@ class Post(models.Model):
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
+
+@receiver(m2m_changed, sender=Post.image.through)
+@receiver(m2m_changed, sender=Post.video.through)
+def update_medias(sender, instance, **kwargs):
+    instance.medias = instance.image.count() + instance.video.count()
+    instance.save()
 
 class VisitorCounter(models.Model):
     count = models.IntegerField(default=0)
