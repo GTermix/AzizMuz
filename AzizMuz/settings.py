@@ -19,6 +19,7 @@ ALLOWED_HOSTS = ["azizmusics.onrender.com",
                  "192.168.0.104",
                  "192.168.0.102",
                  "192.168.0.100",
+                 "deploy-azizmuz.vercel.app"
                  ]
 
 # Application definition
@@ -47,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.CacheMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'AzizMuz.urls'
