@@ -1,5 +1,5 @@
 import json
-from datetime import datetime,timedelta
+from datetime import datetime as dtime,timedelta
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
@@ -74,7 +74,7 @@ class ContactView(View):
                     if i in ['0','1','2','3','4','5','6','7','8','9']:
                         pn+=i
             pn=pn[-9:]
-            two_days_ago = datetime.now() - timedelta(days=2)
+            two_days_ago = dtime.now() - timedelta(days=2)
             count = Contact.objects.filter(phone_number=pn,date__gte=two_days_ago).count()
             if not pn in phone_numbers or count<2:
                 instance = form.save(commit=False)
@@ -86,8 +86,8 @@ class ContactView(View):
                 bl=True
                 days_passed=[]
                 for i in filtered_contacts:
-                    current_date = datetime.now()
-                    target_datetime = datetime.combine(i.date, datetime.min.time())
+                    current_date = dtime.now()
+                    target_datetime = dtime.combine(i.date, dtime.min.time())
                     time_diff = (current_date - target_datetime).days
                     days_passed.append(time_diff)
                     bl *= time_diff>=2

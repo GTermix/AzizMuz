@@ -28,7 +28,7 @@ from mimetypes import add_type
 add_type("text/css", ".css")
 
 INSTALLED_APPS = [
-    "unfold",
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
