@@ -23,12 +23,9 @@ ALLOWED_HOSTS = [".onrender.com",
                  ]
 
 # Application definition
-
-from mimetypes import add_type
-add_type("text/css", ".css")
-
 INSTALLED_APPS = [
     'unfold',
+    "unfold.contrib.forms",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,12 +80,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

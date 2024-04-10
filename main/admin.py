@@ -2,27 +2,31 @@ import shutil
 import os
 from django.contrib import admin
 from django.forms.models import inlineformset_factory
+from unfold.admin import ModelAdmin
 from .models import *
 
-
-class ImageForBlogClass(admin.ModelAdmin):
-    def get_model_perms(self, request):
-        return {}
-class VideoForBlogClass(admin.ModelAdmin):
-    def get_model_perms(self, request):
-        return {}
-
-class ImagesClass(admin.ModelAdmin):
+@admin.register(Image)
+class UserAdmin(ModelAdmin):
     exclude = ('compressed_image',)
-class VideosClass(admin.ModelAdmin):
+@admin.register(ImageForBlog)
+class UserAdmin(ModelAdmin):
+    def get_model_perms(self, request):
+        return {}
+@admin.register(VideoForBlog)
+class UserAdmin(ModelAdmin):
+    def get_model_perms(self, request):
+        return {}
+
+@admin.register(Video)
+class UserAdmin(ModelAdmin):
     exclude = ('dur','thumb','code')
-class PostClass(admin.ModelAdmin):
+@admin.register(Post)
+class UserAdmin(ModelAdmin):
     exclude = ('views', 'medias')
 
-admin.site.register(Video, VideosClass)
-admin.site.register(Music)
-admin.site.register(ImageForBlog,ImageForBlogClass)
-admin.site.register(VideoForBlog,VideoForBlogClass)
-admin.site.register(Post,PostClass)
-admin.site.register(Image, ImagesClass)
-admin.site.register(Events)
+@admin.register(Music)
+class UserAdmin(ModelAdmin):
+    pass
+@admin.register(Events)
+class UserAdmin(ModelAdmin):
+    pass
