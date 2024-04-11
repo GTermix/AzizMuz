@@ -29,7 +29,7 @@ submitButton.addEventListener("click", () => {
       alert(s.a);
       o *= 0;
     }
-    if (e != "+" && q == "998" && numbers.length > 9) {
+    if (e != "+" && q == "998" && (numbers.length > 9 || numbers.length != 12)) {
       alert("Telefon raqami yaroqli emas");
       o *= 0;
     }
